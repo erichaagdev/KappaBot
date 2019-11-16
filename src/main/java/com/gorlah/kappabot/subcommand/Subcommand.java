@@ -1,9 +1,9 @@
-package com.gorlah.kappabot.command;
+package com.gorlah.kappabot.subcommand;
 
+import com.gorlah.kappabot.command.Command;
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.ArrayList;
-import java.util.Map;
 import java.util.TreeMap;
 
 abstract public class Subcommand {
@@ -14,9 +14,11 @@ abstract public class Subcommand {
     
     abstract public String getHelpText();
     
+    abstract public boolean isShownInHelp();
+    
     abstract public String process(Command command, ArrayList<String> parameters) throws Exception;
     
-    String getHelp(String command) {
+    public String getHelp(String command) {
         StringBuilder builder = new StringBuilder(getHelpText());
     
         if (!children.isEmpty()) {
@@ -33,10 +35,12 @@ abstract public class Subcommand {
                     .orElse(0);
         
             for (Subcommand subcommand : children.values()) {
-                builder.append("\n")
-                        .append(StringUtils.leftPad(subcommand.getName(), padding))
-                        .append(" - ")
-                        .append(subcommand.getHelpText());
+                if (subcommand.isShownInHelp()) {
+                    builder.append("\n")
+                            .append(StringUtils.leftPad(subcommand.getName(), padding))
+                            .append(" - ")
+                            .append(subcommand.getHelpText());
+                }
             }
             
             builder.append("```");
@@ -46,17 +50,19 @@ abstract public class Subcommand {
         return builder.toString();
     }
     
-    String getError() {
-        return "Sorry, ${user.mention}. I'm not sure I understand.";
+    public String getError() {
+        return "Sorry, ${user.mention}. I ran into a problem processing your command.";
     }
     
-    String onIncorrectUsage(String command) {
+    public String onIncorrectUsage(String command) {
         StringBuilder builder = new StringBuilder("Try adding one of the following subcommands to `")
                 .append(command)
                 .append("`:");
         
-        for (Map.Entry<String, Subcommand> entry : children.entrySet()) {
-            builder.append(" ").append(entry.getKey()).append(" ,");
+        for (Subcommand subcommand : children.values()) {
+            if (subcommand.isShownInHelp()) {
+                builder.append(" ").append(subcommand.getName()).append(" ,");
+            }
         }
         
         if (children.size() > 0) {
@@ -70,16 +76,16 @@ abstract public class Subcommand {
         return builder.toString();
     }
     
-    Subcommand getSubcommand(String subcommand) {
-        return children.get(subcommand);
+    public Subcommand getSubcommand(String subcommand) {
+        return children.get(subcommand.toLowerCase());
     }
     
-    boolean hasSubcommands() {
+    public boolean hasSubcommands() {
         return !children.isEmpty();
     }
     
     protected void addSubcommand(Subcommand subcommand) {
-        String subcommandName = subcommand.getName();
+        String subcommandName = subcommand.getName().toLowerCase();
         
         if (this.children.containsKey(subcommandName)) {
             throw new IllegalArgumentException("Subcommand with name " + subcommandName + " already exists.");

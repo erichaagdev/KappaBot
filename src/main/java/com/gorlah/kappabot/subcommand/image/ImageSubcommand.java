@@ -1,6 +1,6 @@
 package com.gorlah.kappabot.subcommand.image;
 
-import com.gorlah.kappabot.command.Subcommand;
+import com.gorlah.kappabot.subcommand.Subcommand;
 import com.gorlah.kappabot.jpa.entity.Image;
 import com.gorlah.kappabot.jpa.repository.ImageRepository;
 import org.apache.commons.text.similarity.LongestCommonSubsequenceDistance;

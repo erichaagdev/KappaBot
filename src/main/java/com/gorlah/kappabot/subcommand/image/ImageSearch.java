@@ -26,6 +26,11 @@ public class ImageSearch extends ImageSubcommand {
     }
     
     @Override
+    public boolean isShownInHelp() {
+        return true;
+    }
+    
+    @Override
     public String process(Command command, ArrayList<String> parameters) {
         if (parameters.isEmpty()) {
             return "You need to pass me a search query.";

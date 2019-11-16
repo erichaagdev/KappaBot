@@ -28,6 +28,11 @@ public class ImageTop extends ImageSubcommand {
     }
     
     @Override
+    public boolean isShownInHelp() {
+        return true;
+    }
+    
+    @Override
     public String process(Command command, ArrayList<String> parameters) {
         int num = 5;
         

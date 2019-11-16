@@ -1,7 +1,6 @@
 package com.gorlah.kappabot.subcommand;
 
 import com.gorlah.kappabot.command.Command;
-import com.gorlah.kappabot.command.Subcommand;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -17,6 +16,11 @@ public class HelloCommand extends Subcommand {
     @Override
     public String getHelpText() {
         return "Displays a greeting to the user.";
+    }
+    
+    @Override
+    public boolean isShownInHelp() {
+        return true;
     }
     
     @Override

@@ -2,6 +2,7 @@ package com.gorlah.kappabot.command;
 
 
 import com.gorlah.kappabot.subcommand.RootCommand;
+import com.gorlah.kappabot.subcommand.Subcommand;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;

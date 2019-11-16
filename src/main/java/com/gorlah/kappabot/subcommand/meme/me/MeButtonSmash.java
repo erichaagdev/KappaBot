@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
 import java.util.ArrayList;
 
 @Component
-public class MeButtonSmash extends MemeSubcommand {
+public class MeButtonSmash extends MeSubcommand {
     
     public MeButtonSmash(MemeRepository memeRepository,
                          ImgurImageUpload imgurImageUpload) {
@@ -26,6 +26,11 @@ public class MeButtonSmash extends MemeSubcommand {
     @Override
     public String getHelpText() {
         return "An image of a hand about to hit a blue button.";
+    }
+    
+    @Override
+    public boolean isShownInHelp() {
+        return true;
     }
     
     @Override

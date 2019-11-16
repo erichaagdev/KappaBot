@@ -1,7 +1,7 @@
 package com.gorlah.kappabot.subcommand.image;
 
 import com.gorlah.kappabot.command.Command;
-import com.gorlah.kappabot.command.Subcommand;
+import com.gorlah.kappabot.subcommand.Subcommand;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -17,6 +17,11 @@ public class ImageList extends Subcommand {
     @Override
     public String getHelpText() {
         return "Gets a list of images.";
+    }
+    
+    @Override
+    public boolean isShownInHelp() {
+        return true;
     }
     
     @Override

@@ -1,8 +1,8 @@
 package com.gorlah.kappabot.subcommand;
 
 import com.gorlah.kappabot.command.Command;
-import com.gorlah.kappabot.command.Subcommand;
 import com.gorlah.kappabot.subcommand.meme.MemeMe;
+import com.gorlah.kappabot.subcommand.meme.MemeTest;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -10,8 +10,10 @@ import java.util.ArrayList;
 @Component
 public class MemeCommand extends Subcommand {
     
-    public MemeCommand(MemeMe memeMe) {
+    public MemeCommand(MemeMe memeMe,
+                       MemeTest memeTest) {
         addSubcommand(memeMe);
+        addSubcommand(memeTest);
     }
     
     @Override
@@ -25,7 +27,12 @@ public class MemeCommand extends Subcommand {
     }
     
     @Override
-    public String process(Command command, ArrayList<String> parameters) throws Exception {
+    public boolean isShownInHelp() {
+        return true;
+    }
+    
+    @Override
+    public String process(Command command, ArrayList<String> parameters) {
         return null;
     }
 }

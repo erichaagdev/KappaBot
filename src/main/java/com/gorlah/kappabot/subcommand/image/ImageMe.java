@@ -25,6 +25,11 @@ public class ImageMe extends ImageSubcommand {
     }
     
     @Override
+    public boolean isShownInHelp() {
+        return true;
+    }
+    
+    @Override
     public String process(Command command, ArrayList<String> parameters) {
         if (parameters.isEmpty()) {
             return "I need the name of an image to display.";
