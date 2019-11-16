@@ -11,10 +11,12 @@ public class RootCommand extends Subcommand {
     
     public RootCommand(HelloCommand helloCommand,
                        ImageCommand imageCommand,
-                       MemeCommand memeCommand) {
+                       MemeCommand memeCommand,
+                       CodeCommand codeCommand) {
         addSubcommand(helloCommand);
         addSubcommand(imageCommand);
         addSubcommand(memeCommand);
+        addSubcommand(codeCommand);
     }
     
     @Override
