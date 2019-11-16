@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
 import java.util.ArrayList;
 
 @Component
-public class MeButterfly extends MemeSubcommand {
+public class MeButterfly extends MeSubcommand {
     
     public MeButterfly(MemeRepository memeRepository,
                        ImgurImageUpload imgurImageUpload) {
@@ -26,6 +26,11 @@ public class MeButterfly extends MemeSubcommand {
     @Override
     public String getHelpText() {
         return "A humanoid character erroneously identifying a butterfly as a pigeon.";
+    }
+    
+    @Override
+    public boolean isShownInHelp() {
+        return true;
     }
     
     @Override

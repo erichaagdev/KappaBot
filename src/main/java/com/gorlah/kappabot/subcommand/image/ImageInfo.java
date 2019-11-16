@@ -26,6 +26,11 @@ public class ImageInfo extends ImageSubcommand {
     }
     
     @Override
+    public boolean isShownInHelp() {
+        return true;
+    }
+    
+    @Override
     public String process(Command command, ArrayList<String> parameters) {
         if (parameters.isEmpty()) {
             return "I need the name of an image you would like info for.";

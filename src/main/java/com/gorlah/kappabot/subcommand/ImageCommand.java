@@ -1,7 +1,6 @@
 package com.gorlah.kappabot.subcommand;
 
 import com.gorlah.kappabot.command.Command;
-import com.gorlah.kappabot.command.Subcommand;
 import com.gorlah.kappabot.subcommand.image.ImageAdd;
 import com.gorlah.kappabot.subcommand.image.ImageInfo;
 import com.gorlah.kappabot.subcommand.image.ImageList;
@@ -37,6 +36,11 @@ public class ImageCommand extends Subcommand {
     @Override
     public String getHelpText() {
         return "For everything related to images.";
+    }
+    
+    @Override
+    public boolean isShownInHelp() {
+        return true;
     }
     
     @Override

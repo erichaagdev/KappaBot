@@ -25,6 +25,11 @@ public class ImageAdd extends ImageSubcommand {
     }
     
     @Override
+    public boolean isShownInHelp() {
+        return true;
+    }
+    
+    @Override
     public String process(Command command, ArrayList<String> parameters) {
         if (parameters.isEmpty()) {
             return "I need an image alias and URL to store.";
