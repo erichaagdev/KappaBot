@@ -8,16 +8,6 @@ import java.util.ArrayList;
 @Component
 public class RootCommand extends Subcommand {
     
-    public RootCommand(HelloCommand helloCommand,
-                       ImageCommand imageCommand,
-                       MemeCommand memeCommand,
-                       CodeCommand codeCommand) {
-        addSubcommand(helloCommand);
-        addSubcommand(imageCommand);
-        addSubcommand(memeCommand);
-        addSubcommand(codeCommand);
-    }
-    
     @Override
     public String getName() {
         return "/kb";
@@ -32,7 +22,12 @@ public class RootCommand extends Subcommand {
     public boolean isShownInHelp() {
         return true;
     }
-    
+
+    @Override
+    public Class<? extends Subcommand> getParent() {
+        throw new UnsupportedOperationException();
+    }
+
     @Override
     public String process(Command command, ArrayList<String> parameters) {
         return null;

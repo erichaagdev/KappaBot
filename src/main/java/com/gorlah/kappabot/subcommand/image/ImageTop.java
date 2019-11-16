@@ -3,6 +3,7 @@ package com.gorlah.kappabot.subcommand.image;
 import com.gorlah.kappabot.command.Command;
 import com.gorlah.kappabot.jpa.entity.Image;
 import com.gorlah.kappabot.jpa.repository.ImageRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Component;
@@ -11,11 +12,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Component
+@RequiredArgsConstructor
 public class ImageTop extends ImageSubcommand {
-    
-    public ImageTop(ImageRepository imageRepository) {
-        super(imageRepository);
-    }
+
+    private final ImageRepository imageRepository;
     
     @Override
     public String getName() {

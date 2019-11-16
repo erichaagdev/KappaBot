@@ -54,6 +54,7 @@ dependencies {
   implementation("org.jsoup:jsoup:1.10.2")
   implementation("mysql:mysql-connector-java:8.0.18")
   implementation("org.apache.commons:commons-text:1.8")
+  implementation("com.google.guava:guava:28.1-jre")
 
   // Test dependencies
   testImplementation("org.springframework.boot:spring-boot-starter-test") {

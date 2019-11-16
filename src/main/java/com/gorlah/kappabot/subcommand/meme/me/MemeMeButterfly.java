@@ -5,27 +5,27 @@ import com.gorlah.kappabot.imgur.ImgurImage;
 import com.gorlah.kappabot.imgur.ImgurImageUpload;
 import com.gorlah.kappabot.jpa.entity.Meme;
 import com.gorlah.kappabot.jpa.repository.MemeRepository;
-import com.gorlah.kappabot.meme.template.ButtonSmashMeme;
+import com.gorlah.kappabot.meme.template.ButterflyMeme;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 
 @Component
-public class MeButtonSmash extends MeSubcommand {
-    
-    public MeButtonSmash(MemeRepository memeRepository,
-                         ImgurImageUpload imgurImageUpload) {
-        super(memeRepository, imgurImageUpload);
-    }
+@RequiredArgsConstructor
+public class MemeMeButterfly extends MemeMeSubcommand {
+
+    private final MemeRepository memeRepository;
+    private final ImgurImageUpload imgurImageUpload;
     
     @Override
     public String getName() {
-        return "buttonSmash";
+        return "butterfly";
     }
     
     @Override
     public String getHelpText() {
-        return "An image of a hand about to hit a blue button.";
+        return "A humanoid character erroneously identifying a butterfly as a pigeon.";
     }
     
     @Override
@@ -49,10 +49,10 @@ public class MeButtonSmash extends MeSubcommand {
         
             return meme.getUrl();
         }
-        
-        ButtonSmashMeme buttonSmashMeme = new ButtonSmashMeme(memeText);
-        ImgurImage imgurImage = new ImgurImage(buttonSmashMeme.getImage());
     
+        ButterflyMeme butterflyMeme = new ButterflyMeme(memeText);
+        ImgurImage imgurImage = new ImgurImage(butterflyMeme.getImage());
+        
         String imgurUrl = imgurImageUpload.upload(imgurImage);
     
         meme = Meme.builder()
@@ -61,9 +61,9 @@ public class MeButtonSmash extends MeSubcommand {
                 .url(imgurUrl)
                 .user(command.getCalledBy())
                 .build();
-    
+        
         meme = memeRepository.save(meme);
-    
+        
         return meme.getUrl();
     }
 }

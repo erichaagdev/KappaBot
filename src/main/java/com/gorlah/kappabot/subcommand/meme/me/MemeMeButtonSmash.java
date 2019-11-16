@@ -5,27 +5,27 @@ import com.gorlah.kappabot.imgur.ImgurImage;
 import com.gorlah.kappabot.imgur.ImgurImageUpload;
 import com.gorlah.kappabot.jpa.entity.Meme;
 import com.gorlah.kappabot.jpa.repository.MemeRepository;
-import com.gorlah.kappabot.meme.template.ButterflyMeme;
+import com.gorlah.kappabot.meme.template.ButtonSmashMeme;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 
 @Component
-public class MeButterfly extends MeSubcommand {
-    
-    public MeButterfly(MemeRepository memeRepository,
-                       ImgurImageUpload imgurImageUpload) {
-        super(memeRepository, imgurImageUpload);
-    }
+@RequiredArgsConstructor
+public class MemeMeButtonSmash extends MemeMeSubcommand {
+
+    private final MemeRepository memeRepository;
+    private final ImgurImageUpload imgurImageUpload;
     
     @Override
     public String getName() {
-        return "butterfly";
+        return "buttonSmash";
     }
     
     @Override
     public String getHelpText() {
-        return "A humanoid character erroneously identifying a butterfly as a pigeon.";
+        return "An image of a hand about to hit a blue button.";
     }
     
     @Override
@@ -49,10 +49,10 @@ public class MeButterfly extends MeSubcommand {
         
             return meme.getUrl();
         }
-    
-        ButterflyMeme butterflyMeme = new ButterflyMeme(memeText);
-        ImgurImage imgurImage = new ImgurImage(butterflyMeme.getImage());
         
+        ButtonSmashMeme buttonSmashMeme = new ButtonSmashMeme(memeText);
+        ImgurImage imgurImage = new ImgurImage(buttonSmashMeme.getImage());
+    
         String imgurUrl = imgurImageUpload.upload(imgurImage);
     
         meme = Meme.builder()
@@ -61,9 +61,9 @@ public class MeButterfly extends MeSubcommand {
                 .url(imgurUrl)
                 .user(command.getCalledBy())
                 .build();
-        
+    
         meme = memeRepository.save(meme);
-        
+    
         return meme.getUrl();
     }
 }

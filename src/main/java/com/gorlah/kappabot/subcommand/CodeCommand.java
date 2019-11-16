@@ -22,7 +22,12 @@ public class CodeCommand extends Subcommand {
     public boolean isShownInHelp() {
         return false;
     }
-    
+
+    @Override
+    public Class<? extends Subcommand> getParent() {
+        return RootCommand.class;
+    }
+
     @Override
     public String process(Command command, ArrayList<String> parameters) {
         return "My codebase is open source! Here's a link to my GitHub repository: https://github.com/Gorlah/KappaBot";

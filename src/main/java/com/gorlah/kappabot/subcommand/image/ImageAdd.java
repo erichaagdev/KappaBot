@@ -3,16 +3,17 @@ package com.gorlah.kappabot.subcommand.image;
 import com.gorlah.kappabot.command.Command;
 import com.gorlah.kappabot.jpa.entity.Image;
 import com.gorlah.kappabot.jpa.repository.ImageRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 
 @Component
+@RequiredArgsConstructor
 public class ImageAdd extends ImageSubcommand {
     
-    public ImageAdd(ImageRepository imageRepository) {
-        super(imageRepository);
-    }
+    private final ImageRepository imageRepository;
+    private final ImageHelper imageHelper;
     
     @Override
     public String getName() {
@@ -37,7 +38,7 @@ public class ImageAdd extends ImageSubcommand {
             return "I need an image URL to store.";
         }
         
-        Image image = getImage(parameters.get(0).replaceAll("\\s|'", ""));
+        Image image = imageHelper.getImage(parameters.get(0).replaceAll("\\s|'", ""));
         
         if (image != null) {
             return "An image with that alias already exists.";
