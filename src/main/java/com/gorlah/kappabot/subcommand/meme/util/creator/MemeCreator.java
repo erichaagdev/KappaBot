@@ -9,6 +9,5 @@ public interface MemeCreator {
 
     String getName();
 
-    MemeTemplate create(Command command, ArrayList<String> parameters)
-            throws MemeCreationException;
+    MemeTemplate create(Command command, ArrayList<String> parameters) throws MemeCreationException;
 }

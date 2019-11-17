@@ -18,6 +18,7 @@ public class ButtonSmashMemeCreator implements MemeCreator {
     @Override
     public MemeTemplate create(Command command, ArrayList<String> parameters) {
         String memeText = String.join(" ", parameters);
+
         return new ButtonSmashMeme(memeText);
     }
 }
