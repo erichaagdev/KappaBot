@@ -9,6 +9,11 @@ import com.gorlah.kappabot.meme.template.ButterflyMeme;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 
 @Component
@@ -35,35 +40,70 @@ public class MemeMeButterfly extends MemeMeSubcommand {
     
     @Override
     public String process(Command command, ArrayList<String> parameters) throws Exception {
+        boolean test = isTest(parameters);
+        
         if (parameters.isEmpty()) {
             return "I need some text to write on the image.";
         }
     
-        String memeText = String.join(" ", parameters);
+        String memeText;
+        ButterflyMeme butterflyMeme;
+        URL overlayURL = null;
+        BufferedImage overlay = null;
     
-        Meme meme = memeRepository.findByMemeNameAndParameters(getName(), memeText);
-    
-        if (meme != null) {
-            meme.incrementUseCount();
-            memeRepository.save(meme);
+        try {
+            overlayURL = new URL(parameters.get(parameters.size() - 1));
+        } catch (MalformedURLException ignored) {
         
-            return meme.getUrl();
         }
     
-        ButterflyMeme butterflyMeme = new ButterflyMeme(memeText);
-        ImgurImage imgurImage = new ImgurImage(butterflyMeme.getImage());
+        if (overlayURL == null) {
+            memeText = String.join(" ", parameters);
+        } else {
+            memeText = String.join(" ", parameters.subList(0, parameters.size() - 1));
         
-        String imgurUrl = imgurImageUpload.upload(imgurImage);
+            try {
+                overlay = ImageIO.read(overlayURL);
+            } catch (IOException ignored) {
+            
+            }
+        }
     
-        meme = Meme.builder()
-                .memeName(getName())
-                .parameters(memeText)
-                .url(imgurUrl)
-                .user(command.getCalledBy())
-                .build();
+        if (overlay == null && memeText.isEmpty()) {
+            return "Both the meme text and image can't be blank.";
+        } else if (overlay == null) {
+            butterflyMeme = new ButterflyMeme(memeText);
+        } else {
+            butterflyMeme = new ButterflyMeme(memeText, overlay);
+        }
         
-        meme = memeRepository.save(meme);
+        if (test) {
+            writeToLocalFile(butterflyMeme.getImage());
+            return "Image successfully written to local file.";
+        } else {
+            Meme meme = memeRepository.findByMemeNameAndParameters(getName(), String.join(" ", parameters));
+    
+            if (meme != null) {
+                meme.incrementUseCount();
+                memeRepository.save(meme);
         
-        return meme.getUrl();
+                return meme.getUrl();
+            }
+    
+            ImgurImage imgurImage = new ImgurImage(butterflyMeme.getImage());
+    
+            String imgurUrl = imgurImageUpload.upload(imgurImage);
+    
+            meme = Meme.builder()
+                    .memeName(getName())
+                    .parameters(String.join(" ", parameters))
+                    .url(imgurUrl)
+                    .user(command.getCalledBy())
+                    .build();
+    
+            meme = memeRepository.save(meme);
+    
+            return meme.getUrl();
+        }
     }
 }

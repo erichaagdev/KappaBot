@@ -35,35 +35,42 @@ public class MemeMeButtonSmash extends MemeMeSubcommand {
     
     @Override
     public String process(Command command, ArrayList<String> parameters) throws Exception {
+        boolean test = isTest(parameters);
+        
         if (parameters.isEmpty()) {
             return "I need some text to write on the image.";
         }
     
         String memeText = String.join(" ", parameters);
+        ButtonSmashMeme buttonSmashMeme = new ButtonSmashMeme(memeText);
     
-        Meme meme = memeRepository.findByMemeNameAndParameters(getName(), memeText);
+        if (test) {
+            writeToLocalFile(buttonSmashMeme.getImage());
+            return "Image successfully written to local file.";
+        } else {
+            Meme meme = memeRepository.findByMemeNameAndParameters(getName(), memeText);
     
-        if (meme != null) {
-            meme.incrementUseCount();
-            memeRepository.save(meme);
+            if (meme != null) {
+                meme.incrementUseCount();
+                memeRepository.save(meme);
         
+                return meme.getUrl();
+            }
+    
+            ImgurImage imgurImage = new ImgurImage(buttonSmashMeme.getImage());
+    
+            String imgurUrl = imgurImageUpload.upload(imgurImage);
+    
+            meme = Meme.builder()
+                    .memeName(getName())
+                    .parameters(memeText)
+                    .url(imgurUrl)
+                    .user(command.getCalledBy())
+                    .build();
+    
+            meme = memeRepository.save(meme);
+    
             return meme.getUrl();
         }
-        
-        ButtonSmashMeme buttonSmashMeme = new ButtonSmashMeme(memeText);
-        ImgurImage imgurImage = new ImgurImage(buttonSmashMeme.getImage());
-    
-        String imgurUrl = imgurImageUpload.upload(imgurImage);
-    
-        meme = Meme.builder()
-                .memeName(getName())
-                .parameters(memeText)
-                .url(imgurUrl)
-                .user(command.getCalledBy())
-                .build();
-    
-        meme = memeRepository.save(meme);
-    
-        return meme.getUrl();
     }
 }

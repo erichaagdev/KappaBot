@@ -47,6 +47,36 @@ public abstract class MemeTemplate {
         }
     }
     
+    protected void drawImage(BufferedImage image, int x, int y, int width, int height) {
+        Graphics2D g = getGraphics2D();
+    
+        g.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
+    
+        int widthToDraw = image.getWidth();
+        int heightToDraw = image.getHeight();
+    
+        if (image.getWidth() > width || image.getHeight() > height) {
+            double areaAspectRatio = height / (double) width;
+            double imageAspectRatio = image.getHeight() / (double) image.getWidth();
+    
+            double scale;
+    
+            if (areaAspectRatio < imageAspectRatio) {
+                scale = height / (double) image.getHeight();
+            } else {
+                scale = width / (double) image.getWidth();
+            }
+    
+            widthToDraw = (int) Math.round(image.getWidth() * scale);
+            heightToDraw = (int) Math.round(image.getHeight() * scale);
+        }
+    
+        int xToDraw = x + ((width - widthToDraw) / 2);
+        int yToDraw = y + ((height - heightToDraw) / 2);
+        
+        g.drawImage(image, xToDraw, yToDraw, widthToDraw, heightToDraw, null);
+    }
+    
     public BufferedImage getImage() {
         BufferedImage copiedImage = new BufferedImage(template.getWidth(), template.getHeight(), template.getType());
         Graphics2D copiedImageGraphics = copiedImage.createGraphics();
