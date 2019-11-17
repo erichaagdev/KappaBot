@@ -7,20 +7,15 @@ import java.util.ArrayList;
 
 @Component
 public class ImageList extends ImageSubcommand {
-    
+
     @Override
     public String getName() {
         return "list";
     }
-    
+
     @Override
     public String getHelpText() {
         return "Gets a list of images.";
-    }
-    
-    @Override
-    public boolean isShownInHelp() {
-        return true;
     }
 
     @Override

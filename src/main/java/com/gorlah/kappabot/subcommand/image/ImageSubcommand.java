@@ -11,4 +11,9 @@ public abstract class ImageSubcommand extends Subcommand {
     public Class<? extends Subcommand> getParent() {
         return ImageCommand.class;
     }
+
+    @Override
+    public boolean isShownInHelp() {
+        return true;
+    }
 }

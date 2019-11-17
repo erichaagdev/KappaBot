@@ -16,30 +16,25 @@ import java.util.List;
 public class ImageTop extends ImageSubcommand {
 
     private final ImageRepository imageRepository;
-    
+
     @Override
     public String getName() {
         return "top";
     }
-    
+
     @Override
     public String getHelpText() {
         return "Displays the top 5 images. Pass a number up to 25 to see more.";
     }
-    
-    @Override
-    public boolean isShownInHelp() {
-        return true;
-    }
-    
+
     @Override
     public String process(Command command, ArrayList<String> parameters) {
         int num = 5;
-        
+
         if (!parameters.isEmpty()) {
             try {
                 num = Integer.parseInt(parameters.get(0));
-            
+
                 if (num > 25) {
                     num = 25;
                 } else if (num < 1) {
@@ -49,22 +44,22 @@ public class ImageTop extends ImageSubcommand {
                 // Exception is ignored because num is already defaulted.
             }
         }
-    
+
         List<Image> images = imageRepository
                 .findAll(PageRequest.of(0, num, Sort.by("useCount").descending()))
                 .toList();
-        
+
         StringBuilder builder = new StringBuilder("The top most used images are:\n```\n");
-    
+
         for (Image image : images) {
             builder.append(String.format("%6d", image.getUseCount()))
                     .append("\t")
                     .append(image.getAlias())
                     .append("\n");
         }
-        
+
         builder.append("```");
-    
+
         return builder.toString();
     }
 }

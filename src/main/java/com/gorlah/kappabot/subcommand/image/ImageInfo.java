@@ -11,39 +11,34 @@ import java.util.ArrayList;
 @Component
 @RequiredArgsConstructor
 public class ImageInfo extends ImageSubcommand {
-    
+
     private final ImageHelper imageHelper;
-    
+
     @Override
     public String getName() {
         return "info";
     }
-    
+
     @Override
     public String getHelpText() {
         return "Display info about an image.";
     }
-    
-    @Override
-    public boolean isShownInHelp() {
-        return true;
-    }
-    
+
     @Override
     public String process(Command command, ArrayList<String> parameters) {
         if (parameters.isEmpty()) {
             return "I need the name of an image you would like info for.";
         }
-        
+
         Image image = imageHelper.getImage(parameters);
-        
+
         if (image == null) {
             return "I couldn't find that image.";
         }
-        
+
         String user = image.getUser() == null || image.getUser().isEmpty() ? "null" : image.getUser();
         int useCount = image.getUseCount();
-    
+
         return MessageFormat
                 .format("Image ''{0}'' was added by {1} on {2} and has been used {3} time{4}.",
                         image.getAlias(),

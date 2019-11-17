@@ -1,9 +1,9 @@
-package com.gorlah.kappabot.subcommand.meme.me;
+package com.gorlah.kappabot.subcommand.meme.test;
 
 import com.gorlah.kappabot.command.Command;
 import com.gorlah.kappabot.subcommand.Subcommand;
-import com.gorlah.kappabot.subcommand.meme.MemeMe;
 import com.gorlah.kappabot.subcommand.meme.MemeSubcommand;
+import com.gorlah.kappabot.subcommand.meme.MemeTest;
 import com.gorlah.kappabot.subcommand.meme.util.MemeManager;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -12,27 +12,28 @@ import java.util.ArrayList;
 
 @Component
 @RequiredArgsConstructor
-public class MemeMeButterfly extends MemeSubcommand {
+public class TestButtonSmash extends MemeSubcommand {
 
     private final MemeManager memeManager;
 
     @Override
     public String getName() {
-        return "butterfly";
+        return "buttonSmash";
     }
 
     @Override
     public String getHelpText() {
-        return "A humanoid character erroneously identifying a butterfly as a pigeon.";
+        return "An image of a hand about to hit a blue button.";
     }
 
     @Override
     public Class<? extends Subcommand> getParent() {
-        return MemeMe.class;
+        return MemeTest.class;
     }
 
     @Override
     protected String doProcess(Command command, ArrayList<String> parameters) throws Exception {
-        return memeManager.getOrCreate("butterfly", "imgur", command, parameters, true);
+        memeManager.getOrCreate("buttonSmash", "file", command, parameters, false);
+        return "Image successfully written to local file.";
     }
 }

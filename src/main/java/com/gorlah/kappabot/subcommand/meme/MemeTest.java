@@ -1,39 +1,29 @@
 package com.gorlah.kappabot.subcommand.meme;
 
-import com.gorlah.kappabot.integration.imgur.ImgurIntegration;
 import com.gorlah.kappabot.subcommand.MemeCommand;
 import com.gorlah.kappabot.subcommand.Subcommand;
-import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 @Component
-@RequiredArgsConstructor
-public class MemeMe extends Subcommand {
-
-    private final ImgurIntegration imgurIntegration;
+public class MemeTest extends Subcommand {
 
     @Override
     public String getName() {
-        return "me";
+        return "test";
     }
 
     @Override
     public String getHelpText() {
-        return "Generates a meme.";
+        return "Generates a meme and writes it to a local file.";
     }
 
     @Override
     public boolean isShownInHelp() {
-        return true;
+        return false;
     }
 
     @Override
     public Class<? extends Subcommand> getParent() {
         return MemeCommand.class;
-    }
-
-    @Override
-    public boolean isEnabled() {
-        return imgurIntegration.isEnabled();
     }
 }
