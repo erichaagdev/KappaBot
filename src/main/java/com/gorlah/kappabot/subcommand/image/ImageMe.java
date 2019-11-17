@@ -13,7 +13,6 @@ import java.util.ArrayList;
 public class ImageMe extends ImageSubcommand {
 
     private final ImageRepository imageRepository;
-
     private final ImageHelper imageHelper;
 
     @Override

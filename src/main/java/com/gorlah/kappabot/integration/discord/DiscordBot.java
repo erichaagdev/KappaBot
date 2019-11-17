@@ -27,7 +27,6 @@ public class DiscordBot extends ListenerAdapter {
     private String commandPrefix;
 
     private final CommandProcessor commandProcessor;
-
     private final DiscordIntegration discordIntegration;
 
     private JDA bot;

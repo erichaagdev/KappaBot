@@ -18,7 +18,6 @@ import java.util.Objects;
 public class ImgurImageUpload {
 
     private final ImgurIntegration imgurIntegration;
-
     private final ObjectMapper objectMapper;
 
     public String upload(ImgurImage image)
