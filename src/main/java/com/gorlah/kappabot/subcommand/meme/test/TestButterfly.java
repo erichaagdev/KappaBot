@@ -3,6 +3,7 @@ package com.gorlah.kappabot.subcommand.meme.test;
 import com.gorlah.kappabot.command.Command;
 import com.gorlah.kappabot.meme.template.ButterflyMeme;
 import com.gorlah.kappabot.subcommand.Subcommand;
+import com.gorlah.kappabot.subcommand.meme.MemeTest;
 import org.springframework.stereotype.Component;
 
 import javax.imageio.ImageIO;
@@ -26,7 +27,12 @@ public class TestButterfly extends Subcommand {
     public boolean isShownInHelp() {
         return true;
     }
-    
+
+    @Override
+    public Class<? extends Subcommand> getParent() {
+        return MemeTest.class;
+    }
+
     @Override
     public String process(Command command, ArrayList<String> parameters) throws Exception {
         if (parameters.isEmpty()) {

@@ -4,6 +4,8 @@ import com.gorlah.kappabot.command.Command;
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Map;
 import java.util.TreeMap;
 
 abstract public class Subcommand {
@@ -15,6 +17,8 @@ abstract public class Subcommand {
     abstract public String getHelpText();
     
     abstract public boolean isShownInHelp();
+
+    abstract public Class<? extends Subcommand> getParent();
     
     abstract public String process(Command command, ArrayList<String> parameters) throws Exception;
     
@@ -84,13 +88,18 @@ abstract public class Subcommand {
         return !children.isEmpty();
     }
     
-    protected void addSubcommand(Subcommand subcommand) {
+    void addSubcommand(Subcommand subcommand) {
         String subcommandName = subcommand.getName().toLowerCase();
         
         if (this.children.containsKey(subcommandName)) {
-            throw new IllegalArgumentException("Subcommand with name " + subcommandName + " already exists.");
+            throw new IllegalArgumentException(
+               "Subcommand with name " + subcommandName + " already exists in " + getName());
         }
         
         this.children.put(subcommandName, subcommand);
+    }
+
+    Map<String, Subcommand> getChildren() {
+        return Collections.unmodifiableMap(children);
     }
 }

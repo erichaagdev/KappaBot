@@ -22,7 +22,12 @@ public class HelloCommand extends Subcommand {
     public boolean isShownInHelp() {
         return true;
     }
-    
+
+    @Override
+    public Class<? extends Subcommand> getParent() {
+        return RootCommand.class;
+    }
+
     @Override
     public String process(Command command, ArrayList<String> parameters) {
         if (parameters != null && !parameters.isEmpty() && "there".equals(parameters.get(0))) {
