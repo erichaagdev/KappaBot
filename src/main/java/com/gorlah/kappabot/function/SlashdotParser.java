@@ -1,17 +1,15 @@
 package com.gorlah.kappabot.function;
 
+import lombok.extern.slf4j.Slf4j;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+@Slf4j
 public class SlashdotParser {
-    
-    private static final Logger logger = LoggerFactory.getLogger(SlashdotParser.class);
     
     private static final Pattern MOBILE_SLASHDOT = Pattern.compile("https:\\/\\/m\\.slashdot\\.org\\/story\\/\\d+");
     
@@ -45,7 +43,7 @@ public class SlashdotParser {
         
             return doc.select(".story-title > a").text();
         } catch (Exception e) {
-            logger.warn("Failed to parse '" + mobileUrl + "': " + e.getLocalizedMessage());
+            log.warn("Failed to parse '" + mobileUrl + "': " + e.getLocalizedMessage());
         }
         
         return null;

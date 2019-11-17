@@ -3,16 +3,14 @@ package com.gorlah.kappabot.command;
 
 import com.gorlah.kappabot.subcommand.RootCommand;
 import com.gorlah.kappabot.subcommand.Subcommand;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 
+@Slf4j
 @Component
 public class CommandProcessor {
-    
-    private static final Logger logger = LoggerFactory.getLogger(CommandProcessor.class);
     
     private final RootCommand rootCommand;
     
@@ -53,7 +51,7 @@ public class CommandProcessor {
         try {
             return currentSubcommand.process(command, parameters);
         } catch (Exception e) {
-            logger.error(e.getMessage(), e);
+            log.error(e.getMessage(), e);
             return currentSubcommand.getError();
         }
     }

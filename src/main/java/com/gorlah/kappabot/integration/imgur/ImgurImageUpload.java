@@ -3,7 +3,6 @@ package com.gorlah.kappabot.integration.imgur;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -12,7 +11,6 @@ import org.springframework.web.client.RestTemplate;
 
 import java.util.Objects;
 
-@Slf4j
 @Component
 @RequiredArgsConstructor
 public class ImgurImageUpload {
