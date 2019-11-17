@@ -7,7 +7,8 @@ import org.springframework.data.repository.PagingAndSortingRepository;
 import java.util.List;
 
 public interface ImageRepository extends CrudRepository<Image, String>, PagingAndSortingRepository<Image, String> {
-    
+
     Image findByAlias(String alias);
+
     List<Image> findByAliasContainsIgnoreCase(String alias);
 }

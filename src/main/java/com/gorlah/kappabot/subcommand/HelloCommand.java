@@ -7,17 +7,17 @@ import java.util.ArrayList;
 
 @Component
 public class HelloCommand extends Subcommand {
-    
+
     @Override
     public String getName() {
         return "hello";
     }
-    
+
     @Override
     public String getHelpText() {
         return "Displays a greeting to the user.";
     }
-    
+
     @Override
     public boolean isShownInHelp() {
         return true;
@@ -33,7 +33,7 @@ public class HelloCommand extends Subcommand {
         if (parameters != null && !parameters.isEmpty() && "there".equals(parameters.get(0))) {
             return "General ${user.mention}!";
         }
-        
+
         return "Hey, ${user.mention}!";
     }
 }
