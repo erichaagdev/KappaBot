@@ -10,36 +10,36 @@ public class CustomPhysicalNamingStrategy implements PhysicalNamingStrategy {
 
     @Override
     public Identifier toPhysicalCatalogName(
-        final Identifier identifier,
-        final JdbcEnvironment jdbcEnv) {
+            final Identifier identifier,
+            final JdbcEnvironment jdbcEnv) {
         return identifier;
     }
 
     @Override
     public Identifier toPhysicalColumnName(
-        final Identifier identifier,
-        final JdbcEnvironment jdbcEnv) {
+            final Identifier identifier,
+            final JdbcEnvironment jdbcEnv) {
         return convertToSnakeCase(identifier);
     }
 
     @Override
     public Identifier toPhysicalSchemaName(
-        final Identifier identifier,
-        final JdbcEnvironment jdbcEnv) {
+            final Identifier identifier,
+            final JdbcEnvironment jdbcEnv) {
         return identifier;
     }
 
     @Override
     public Identifier toPhysicalSequenceName(
-        final Identifier identifier,
-        final JdbcEnvironment jdbcEnv) {
+            final Identifier identifier,
+            final JdbcEnvironment jdbcEnv) {
         return convertToSnakeCase(identifier);
     }
 
     @Override
     public Identifier toPhysicalTableName(
-        final Identifier identifier,
-        final JdbcEnvironment jdbcEnv) {
+            final Identifier identifier,
+            final JdbcEnvironment jdbcEnv) {
         return convertToSnakeCase(identifier);
     }
 
@@ -47,8 +47,8 @@ public class CustomPhysicalNamingStrategy implements PhysicalNamingStrategy {
         final String regex = "([a-z])([A-Z])";
         final String replacement = "$1_$2";
         final String newName = identifier.getText()
-            .replaceAll(regex, replacement)
-            .toUpperCase();
+                .replaceAll(regex, replacement)
+                .toUpperCase();
         return Identifier.toIdentifier(PREFIX + newName);
     }
 }

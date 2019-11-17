@@ -21,7 +21,7 @@ public class ImgurMemeWriter implements MemeWriter {
 
     @Override
     public String write(MemeTemplate memeTemplate)
-        throws Exception {
+            throws Exception {
         imgurIntegration.require();
         ImgurImage imgurImage = new ImgurImage(memeTemplate.getImage());
         return imgurImageUpload.upload(imgurImage);

@@ -18,12 +18,12 @@ public class MemeManager {
     private final Set<MemeWriter> memeWriters;
 
     public String getOrCreate(
-        String memeName,
-        String writerName,
-        Command command,
-        ArrayList<String> parameters,
-        boolean save)
-        throws Exception {
+            String memeName,
+            String writerName,
+            Command command,
+            ArrayList<String> parameters,
+            boolean save)
+            throws Exception {
         if (save) {
             var url = memeFinder.findExisting(memeName, parameters).orElse(null);
             if (url != null) {
@@ -41,8 +41,8 @@ public class MemeManager {
 
     private MemeWriter getWriter(String writerName) {
         return memeWriters.stream()
-            .filter(writer -> writer.getName().equalsIgnoreCase(writerName))
-            .findFirst()
-            .orElseThrow(() -> new RuntimeException("Unknown meme writer: " + writerName));
+                .filter(writer -> writer.getName().equalsIgnoreCase(writerName))
+                .findFirst()
+                .orElseThrow(() -> new RuntimeException("Unknown meme writer: " + writerName));
     }
 }

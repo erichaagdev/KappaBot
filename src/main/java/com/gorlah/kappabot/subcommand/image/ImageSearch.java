@@ -44,7 +44,7 @@ public class ImageSearch extends ImageSubcommand {
         }
 
         StringBuilder builder =
-            new StringBuilder("Here's what I found for `").append(alias).append("`: ");
+                new StringBuilder("Here's what I found for `").append(alias).append("`: ");
 
         for (Image image : images) {
             builder.append(image.getAlias()).append(", ");

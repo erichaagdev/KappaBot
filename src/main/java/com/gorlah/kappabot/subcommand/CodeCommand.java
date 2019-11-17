@@ -7,17 +7,17 @@ import java.util.ArrayList;
 
 @Component
 public class CodeCommand extends Subcommand {
-    
+
     @Override
     public String getName() {
         return "code";
     }
-    
+
     @Override
     public String getHelpText() {
         return "Returns my GitHub repository url.";
     }
-    
+
     @Override
     public boolean isShownInHelp() {
         return false;

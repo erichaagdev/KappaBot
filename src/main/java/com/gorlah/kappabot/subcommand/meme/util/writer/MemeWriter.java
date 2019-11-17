@@ -10,5 +10,5 @@ public interface MemeWriter {
      * @return the url of the meme
      */
     String write(MemeTemplate memeTemplate)
-        throws Exception;
+            throws Exception;
 }

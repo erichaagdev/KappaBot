@@ -13,32 +13,32 @@ import java.util.List;
 @RequiredArgsConstructor
 class ImageHelper {
 
-  private static final LongestCommonSubsequenceDistance LCSD = new LongestCommonSubsequenceDistance();
+    private static final LongestCommonSubsequenceDistance LCSD = new LongestCommonSubsequenceDistance();
 
-  private final ImageRepository imageRepository;
+    private final ImageRepository imageRepository;
 
-  Image getImage(ArrayList<String> parameters) {
-    return getImage(String.join("", parameters).replaceAll("'", "").trim());
-  }
-
-  Image getImage(String alias) {
-    Image image = imageRepository.findByAlias(alias);
-
-    if (image == null) {
-      List<Image> images = imageRepository.findByAliasContainsIgnoreCase(alias);
-
-      int lowest = 0;
-
-      for (Image tempImage: images) {
-        int lcsd = LCSD.apply(alias, tempImage.getAlias());
-
-        if (image == null || lcsd < lowest) {
-          image = tempImage;
-          lowest = lcsd;
-        }
-      }
+    Image getImage(ArrayList<String> parameters) {
+        return getImage(String.join("", parameters).replaceAll("'", "").trim());
     }
 
-    return image;
-  }
+    Image getImage(String alias) {
+        Image image = imageRepository.findByAlias(alias);
+
+        if (image == null) {
+            List<Image> images = imageRepository.findByAliasContainsIgnoreCase(alias);
+
+            int lowest = 0;
+
+            for (Image tempImage : images) {
+                int lcsd = LCSD.apply(alias, tempImage.getAlias());
+
+                if (image == null || lcsd < lowest) {
+                    image = tempImage;
+                    lowest = lcsd;
+                }
+            }
+        }
+
+        return image;
+    }
 }

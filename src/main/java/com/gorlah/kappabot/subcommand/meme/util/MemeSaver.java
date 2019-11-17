@@ -17,11 +17,11 @@ class MemeSaver {
 
     Meme save(MemeTemplate memeTemplate, String url, Command command, List<String> parameters) {
         Meme meme = Meme.builder()
-            .memeName(memeTemplate.getName())
-            .parameters(String.join(" ", parameters))
-            .url(url)
-            .user(command.getCalledBy())
-            .build();
+                .memeName(memeTemplate.getName())
+                .parameters(String.join(" ", parameters))
+                .url(url)
+                .user(command.getCalledBy())
+                .build();
 
         return memeRepository.save(meme);
     }

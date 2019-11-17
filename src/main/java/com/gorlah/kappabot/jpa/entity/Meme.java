@@ -20,28 +20,28 @@ import java.sql.Timestamp;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Meme {
-    
+
     @Id
-    @GeneratedValue(strategy=GenerationType.TABLE)
+    @GeneratedValue(strategy = GenerationType.TABLE)
     private Integer id;
-    
+
     private String memeName;
-    
+
     @Column(nullable = false, columnDefinition = "TEXT")
     private String parameters;
-    
+
     @Column(nullable = false)
     private String url;
-    
+
     @Column(nullable = false)
     private String user;
-    
+
     @CreationTimestamp
     @Column(nullable = false, columnDefinition = "DATETIME DEFAULT CURRENT_TIMESTAMP")
     private Timestamp added;
-    
+
     private int useCount;
-    
+
     public void incrementUseCount() {
         useCount++;
     }

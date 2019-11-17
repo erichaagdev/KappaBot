@@ -33,12 +33,12 @@ public class DiscordBot extends ListenerAdapter {
 
     @PostConstruct
     private void initialize()
-        throws LoginException {
+            throws LoginException {
         if (discordIntegration.isEnabled()) {
             bot = new JDABuilder(discordIntegration.getToken())
-                .addEventListeners(this)
-                .setActivity(Activity.playing(commandPrefix + " help | I'm back. \uD83D\uDE0F"))
-                .build();
+                    .addEventListeners(this)
+                    .setActivity(Activity.playing(commandPrefix + " help | I'm back. \uD83D\uDE0F"))
+                    .build();
         }
     }
 
@@ -63,14 +63,14 @@ public class DiscordBot extends ListenerAdapter {
             }
         } else {
             if (message.length() < commandPrefix.length()
-                || !commandPrefix.equalsIgnoreCase(message.substring(
-                0,
-                commandPrefix.length()))) {
+                    || !commandPrefix.equalsIgnoreCase(message.substring(
+                    0,
+                    commandPrefix.length()))) {
                 return;
             }
 
             Command command =
-                new Command(commandPrefix, message, event.getAuthor().getName());
+                    new Command(commandPrefix, message, event.getAuthor().getName());
 
             response = new StringBuilder(commandProcessor.process(command));
             response = new StringBuilder(formatResponse(response.toString(), event));
@@ -78,8 +78,8 @@ public class DiscordBot extends ListenerAdapter {
 
         if (response.length() > 0) {
             event.getChannel()
-                .sendMessage(response.toString())
-                .queue();
+                    .sendMessage(response.toString())
+                    .queue();
         }
     }
 

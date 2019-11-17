@@ -17,14 +17,14 @@ class MemeFactory {
     private final Set<MemeCreator> memeCreators;
 
     MemeTemplate create(String memeName, Command command, ArrayList<String> parameters)
-        throws MemeCreationException {
+            throws MemeCreationException {
         return getCreatorForMeme(memeName).create(command, parameters);
     }
 
     private MemeCreator getCreatorForMeme(String memeName) throws MemeCreationException {
         return memeCreators.stream()
-            .filter(memeCreator -> memeCreator.getName().equalsIgnoreCase(memeName))
-            .findFirst()
-            .orElseThrow(() -> new MemeCreationException("Unknown meme: " + memeName));
+                .filter(memeCreator -> memeCreator.getName().equalsIgnoreCase(memeName))
+                .findFirst()
+                .orElseThrow(() -> new MemeCreationException("Unknown meme: " + memeName));
     }
 }

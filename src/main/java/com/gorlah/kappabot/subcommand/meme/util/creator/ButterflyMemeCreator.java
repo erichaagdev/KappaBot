@@ -22,7 +22,7 @@ public class ButterflyMemeCreator implements MemeCreator {
 
     @Override
     public MemeTemplate create(Command command, ArrayList<String> parameters)
-        throws MemeCreationException {
+            throws MemeCreationException {
         String memeText;
         URL overlayURL = null;
         BufferedImage overlay = null;

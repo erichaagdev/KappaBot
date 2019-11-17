@@ -47,9 +47,9 @@ abstract public class Subcommand {
             for (Subcommand subcommand : children.values()) {
                 if (subcommand.isShownInHelp()) {
                     builder.append("\n")
-                        .append(StringUtils.leftPad(subcommand.getName(), padding))
-                        .append(" - ")
-                        .append(subcommand.getHelpText());
+                            .append(StringUtils.leftPad(subcommand.getName(), padding))
+                            .append(" - ")
+                            .append(subcommand.getHelpText());
                 }
             }
 
@@ -99,7 +99,7 @@ abstract public class Subcommand {
 
         if (this.children.containsKey(subcommandName)) {
             throw new IllegalArgumentException(
-                "Subcommand with name " + subcommandName + " already exists in " + getName());
+                    "Subcommand with name " + subcommandName + " already exists in " + getName());
         }
 
         this.children.put(subcommandName, subcommand);
