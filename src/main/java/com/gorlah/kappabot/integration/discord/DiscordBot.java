@@ -63,14 +63,11 @@ public class DiscordBot extends ListenerAdapter {
             }
         } else {
             if (message.length() < commandPrefix.length()
-                    || !commandPrefix.equalsIgnoreCase(message.substring(
-                    0,
-                    commandPrefix.length()))) {
+                    || !commandPrefix.equalsIgnoreCase(message.substring(0, commandPrefix.length()))) {
                 return;
             }
 
-            Command command =
-                    new Command(commandPrefix, message, event.getAuthor().getName());
+            Command command = new Command(commandPrefix, message, event.getAuthor().getName());
 
             response = new StringBuilder(commandProcessor.process(command));
             response = new StringBuilder(formatResponse(response.toString(), event));
