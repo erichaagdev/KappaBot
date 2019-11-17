@@ -14,8 +14,7 @@ public abstract class MemeSubcommand extends Subcommand {
     }
 
     @Override
-    public String process(Command command, ArrayList<String> parameters)
-            throws Exception {
+    public String process(Command command, ArrayList<String> parameters) throws Exception {
         if (parameters.isEmpty()) {
             return "I need some text to write on the image.";
         }
@@ -26,6 +25,5 @@ public abstract class MemeSubcommand extends Subcommand {
         }
     }
 
-    protected abstract String doProcess(Command command, ArrayList<String> parameters)
-            throws Exception;
+    protected abstract String doProcess(Command command, ArrayList<String> parameters) throws Exception;
 }

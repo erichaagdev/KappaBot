@@ -16,8 +16,7 @@ class MemeFactory {
 
     private final Set<MemeCreator> memeCreators;
 
-    MemeTemplate create(String memeName, Command command, ArrayList<String> parameters)
-            throws MemeCreationException {
+    MemeTemplate create(String memeName, Command command, ArrayList<String> parameters) throws MemeCreationException {
         return getCreatorForMeme(memeName).create(command, parameters);
     }
 

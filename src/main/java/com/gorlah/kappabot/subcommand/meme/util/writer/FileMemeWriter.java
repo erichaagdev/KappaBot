@@ -15,8 +15,7 @@ public class FileMemeWriter implements MemeWriter {
     }
 
     @Override
-    public String write(MemeTemplate memeTemplate)
-            throws Exception {
+    public String write(MemeTemplate memeTemplate) throws Exception {
         File outputfile = new File("saved.png");
         ImageIO.write(memeTemplate.getImage(), "png", outputfile);
         return "file://" + outputfile.getAbsolutePath();

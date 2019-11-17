@@ -7,8 +7,7 @@ public interface MemeWriter {
     String getName();
 
     /**
-     * @return the url of the meme
+     * @return the location of the meme
      */
-    String write(MemeTemplate memeTemplate)
-            throws Exception;
+    String write(MemeTemplate memeTemplate) throws Exception;
 }

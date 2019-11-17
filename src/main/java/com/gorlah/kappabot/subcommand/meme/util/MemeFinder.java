@@ -16,11 +16,14 @@ class MemeFinder {
 
     Optional<String> findExisting(String name, List<String> parameters) {
         Meme meme = memeRepository.findByMemeNameAndParameters(name, String.join(" ", parameters));
+
         if (meme != null) {
             meme.incrementUseCount();
             memeRepository.save(meme);
+
             return Optional.of(meme.getUrl());
         }
+
         return Optional.empty();
     }
 }

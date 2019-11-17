@@ -18,8 +18,7 @@ public class ImgurImageUpload {
     private final ImgurIntegration imgurIntegration;
     private final ObjectMapper objectMapper;
 
-    public String upload(ImgurImage image)
-            throws JsonProcessingException {
+    public String upload(ImgurImage image) throws JsonProcessingException {
         imgurIntegration.require();
         RestTemplate restTemplate = new RestTemplate();
 

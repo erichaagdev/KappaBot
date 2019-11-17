@@ -17,25 +17,23 @@ public class MemeManager {
     private final MemeFactory memeFactory;
     private final Set<MemeWriter> memeWriters;
 
-    public String getOrCreate(
-            String memeName,
-            String writerName,
-            Command command,
-            ArrayList<String> parameters,
-            boolean save)
-            throws Exception {
+    public String getOrCreate(String memeName, String writerName, Command command, ArrayList<String> parameters,
+                              boolean save) throws Exception {
         if (save) {
             var url = memeFinder.findExisting(memeName, parameters).orElse(null);
             if (url != null) {
                 return url;
             }
         }
+
         var template = memeFactory.create(memeName, command, parameters);
         var writer = getWriter(writerName);
         var url = writer.write(template);
+
         if (save) {
             url = memeSaver.save(template, url, command, parameters).getUrl();
         }
+
         return url;
     }
 
