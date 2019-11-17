@@ -7,9 +7,6 @@ import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 
-/**
- * @author ploober
- */
 @Component
 public class ButtonSmashMemeCreator implements MemeCreator {
 
