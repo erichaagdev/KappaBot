@@ -21,6 +21,7 @@ public class MemeManager {
                               boolean save) throws Exception {
         if (save) {
             var url = memeFinder.findExisting(memeName, parameters).orElse(null);
+
             if (url != null) {
                 return url;
             }

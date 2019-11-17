@@ -1,6 +1,4 @@
-package com.gorlah.kappabot.meme.template;
-
-import com.gorlah.kappabot.meme.MemeTemplate;
+package com.gorlah.kappabot.meme;
 
 import java.awt.Color;
 

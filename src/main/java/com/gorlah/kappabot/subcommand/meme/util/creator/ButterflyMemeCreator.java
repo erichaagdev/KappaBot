@@ -2,7 +2,7 @@ package com.gorlah.kappabot.subcommand.meme.util.creator;
 
 import com.gorlah.kappabot.command.Command;
 import com.gorlah.kappabot.meme.MemeTemplate;
-import com.gorlah.kappabot.meme.template.ButterflyMeme;
+import com.gorlah.kappabot.meme.ButterflyMeme;
 import org.springframework.stereotype.Component;
 
 import javax.imageio.ImageIO;
