@@ -26,7 +26,6 @@ build/
 
 transfer.bat
 saved.png
-data.sql
 
 /.idea/*
 !/.idea/codeStyles
