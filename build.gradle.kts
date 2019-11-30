@@ -48,6 +48,7 @@ tasks {
 dependencies {
   implementation("org.springframework.boot:spring-boot-starter-data-jpa")
   implementation("org.springframework.boot:spring-boot-starter-web")
+  implementation("com.github.ben-manes.caffeine:caffeine:2.8.0")
   implementation("net.dv8tion:JDA:4.0.0_39") {
     exclude("club.minnced:opus-java")
   }
