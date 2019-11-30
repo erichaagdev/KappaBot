@@ -1,5 +1,6 @@
 package com.gorlah.kappabot.integration.discord;
 
+import com.google.common.base.Strings;
 import com.gorlah.kappabot.command.Command;
 import com.gorlah.kappabot.command.CommandProcessor;
 import com.gorlah.kappabot.function.SlashdotParser;
@@ -26,6 +27,9 @@ public class DiscordBot extends ListenerAdapter {
     @Value("${discord.command.prefix}")
     private String commandPrefix;
 
+    @Value("${discord.bot.status}")
+    private String botStatus;
+
     private final CommandProcessor commandProcessor;
     private final DiscordIntegration discordIntegration;
 
@@ -37,7 +41,7 @@ public class DiscordBot extends ListenerAdapter {
         if (discordIntegration.isEnabled()) {
             bot = new JDABuilder(discordIntegration.getToken())
                     .addEventListeners(this)
-                    .setActivity(Activity.playing(commandPrefix + " help | I'm back. \uD83D\uDE0F"))
+                    .setActivity(Activity.playing(Strings.isNullOrEmpty(botStatus) ? commandPrefix + " help" : botStatus))
                     .build();
         }
     }
