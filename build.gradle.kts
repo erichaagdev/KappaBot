@@ -53,15 +53,17 @@ dependencies {
     exclude("club.minnced:opus-java")
   }
   implementation("org.jsoup:jsoup:1.10.2")
-  implementation("mysql:mysql-connector-java:8.0.18")
   implementation("org.apache.commons:commons-text:1.8")
   implementation("com.google.guava:guava:28.1-jre")
+
+  // Database drivers
+  implementation("mysql:mysql-connector-java:8.0.18")
+  implementation("com.h2database:h2:1.4.200")
 
   // Test dependencies
   testImplementation("org.springframework.boot:spring-boot-starter-test") {
     exclude("org.junit.vintage:junit-vintage-engine")
   }
-  testImplementation("com.h2database:h2:1.4.200")
 
   // Lombok
   compileOnly("org.projectlombok:lombok:1.18.10")
