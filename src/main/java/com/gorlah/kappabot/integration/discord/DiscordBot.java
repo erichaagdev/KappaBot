@@ -1,7 +1,7 @@
 package com.gorlah.kappabot.integration.discord;
 
 import com.google.common.base.Strings;
-import com.gorlah.kappabot.command.Command;
+import com.gorlah.kappabot.command.CommandPayload;
 import com.gorlah.kappabot.command.CommandProcessor;
 import com.gorlah.kappabot.function.SlashdotParser;
 import lombok.RequiredArgsConstructor;
@@ -71,7 +71,7 @@ public class DiscordBot extends ListenerAdapter {
                 return;
             }
 
-            Command command = new Command(commandPrefix, message, event.getAuthor().getName());
+            CommandPayload command = new CommandPayload(commandPrefix, message, event.getAuthor().getName());
 
             response = new StringBuilder(commandProcessor.process(command));
             response = new StringBuilder(formatResponse(response.toString(), event));

@@ -2,57 +2,47 @@ package com.gorlah.kappabot.command;
 
 
 import com.gorlah.kappabot.subcommand.RootCommand;
-import com.gorlah.kappabot.subcommand.Subcommand;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
-
 @Slf4j
 @Component
+@RequiredArgsConstructor
 public class CommandProcessor {
 
     private final RootCommand rootCommand;
 
-    private CommandProcessor(RootCommand rootCommand) {
-        this.rootCommand = rootCommand;
-    }
-
-    public String process(Command command) {
-        Subcommand currentSubcommand = rootCommand;
-        Subcommand nextSubcommand;
-
-        StringBuilder commandString = new StringBuilder(currentSubcommand.getName());
-        ArrayList<String> parameters = new ArrayList<>();
+    public String process(CommandPayload command) {
+        Command currentSubcommand = rootCommand;
+        Command nextSubcommand;
 
         command.beforeFirst();
         while (command.next()) {
             String subcommandString = command.getSubcommandString();
 
-            if (parameters.isEmpty() && "help".equals(subcommandString)) {
-                return currentSubcommand.getHelp(commandString.toString());
+            if (command.getParameters().isEmpty() && "help".equals(subcommandString)) {
+                return currentSubcommand.getDetailedHelpText();
             }
 
-            nextSubcommand = currentSubcommand.getSubcommand(subcommandString);
+            nextSubcommand = currentSubcommand.getChild(subcommandString);
 
             if (nextSubcommand == null) {
-                parameters.add(command.getSubcommandString());
+                command.addParameter(command.getSubcommandString());
             } else {
-                commandString.append(" ")
-                        .append(subcommandString);
                 currentSubcommand = nextSubcommand;
             }
         }
 
-        if (currentSubcommand.hasSubcommands()) {
-            return currentSubcommand.onIncorrectUsage(commandString.toString());
+        if (currentSubcommand.isParent()) {
+            return currentSubcommand.getIncorrectUsageText();
         }
 
         try {
-            return currentSubcommand.process(command, parameters);
+            return currentSubcommand.process(command);
         } catch (Exception e) {
             log.error(e.getMessage(), e);
-            return currentSubcommand.getError();
+            return currentSubcommand.getErrorText();
         }
     }
 }
