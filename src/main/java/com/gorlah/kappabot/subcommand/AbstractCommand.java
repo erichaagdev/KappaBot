@@ -12,7 +12,7 @@ import java.util.Collections;
 import java.util.Objects;
 import java.util.TreeMap;
 
-public abstract class SkeletalKappaBotCommand implements Command {
+public abstract class AbstractCommand implements Command {
 
     private TreeMap<String, Command> children = new TreeMap<>();
 

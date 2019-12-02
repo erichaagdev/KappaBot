@@ -1,10 +1,10 @@
 package com.gorlah.kappabot.subcommand.root.weather;
 
 import com.gorlah.kappabot.command.Command;
-import com.gorlah.kappabot.subcommand.SkeletalKappaBotCommand;
+import com.gorlah.kappabot.subcommand.AbstractCommand;
 import com.gorlah.kappabot.subcommand.root.WeatherCommand;
 
-abstract class WeatherSubcommand extends SkeletalKappaBotCommand {
+abstract class WeatherSubcommand extends AbstractCommand {
 
     @Override
     public boolean isShownInHelp() {

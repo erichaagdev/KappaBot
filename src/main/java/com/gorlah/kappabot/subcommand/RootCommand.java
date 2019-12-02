@@ -4,7 +4,7 @@ import com.gorlah.kappabot.command.Command;
 import org.springframework.stereotype.Component;
 
 @Component
-public class RootCommand extends SkeletalKappaBotCommand {
+public class RootCommand extends AbstractCommand {
 
     @Override
     public String getName() {

@@ -1,7 +1,7 @@
 package com.gorlah.kappabot.subcommand.root.meme;
 
 import com.gorlah.kappabot.integration.imgur.ImgurIntegration;
-import com.gorlah.kappabot.subcommand.SkeletalKappaBotCommand;
+import com.gorlah.kappabot.subcommand.AbstractCommand;
 import com.gorlah.kappabot.subcommand.root.MemeCommand;
 import com.gorlah.kappabot.command.Command;
 import lombok.RequiredArgsConstructor;
@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 @RequiredArgsConstructor
-public class MemeMe extends SkeletalKappaBotCommand {
+public class MemeMe extends AbstractCommand {
 
     private final ImgurIntegration imgurIntegration;
 
