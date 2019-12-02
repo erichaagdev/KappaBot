@@ -29,17 +29,7 @@ public class CommandPayloadBuilder {
         Matcher regexMatcher = REGEX.matcher(stripCommandPrefix(message));
 
         while (regexMatcher.find()) {
-            String messageToAdd = regexMatcher.group();
-
-            if (!messageToAdd.isEmpty() && messageToAdd.charAt(0) == '\"') {
-                messageToAdd = messageToAdd.substring(1);
-            }
-
-            if (!messageToAdd.isEmpty() && messageToAdd.charAt(messageToAdd.length() - 1) == '\"') {
-                messageToAdd = messageToAdd.substring(0, messageToAdd.length() - 1);
-            }
-
-            messageList.add(messageToAdd.replaceAll("\\\\\"", "\""));
+            messageList.add(sanitizeMessageToAdd(regexMatcher.group()));
         }
 
         return messageList;
@@ -51,5 +41,27 @@ public class CommandPayloadBuilder {
         }
 
         return message.substring(commandPrefix.length() + 1);
+    }
+
+    private String sanitizeMessageToAdd(String message) {
+        message = removeLeadingQuoteIfNecessary(message);
+        message = removeTrailingQuoteIfNecessary(message);
+        message = replaceEscapedQuoteWithRegularQuote(message);
+
+        return message;
+    }
+
+    private String removeLeadingQuoteIfNecessary(String message) {
+        return !message.isEmpty() && message.charAt(0) == '\"' ? message.substring(1) : message;
+    }
+
+    private String removeTrailingQuoteIfNecessary(String message) {
+        return !message.isEmpty() && message.charAt(message.length() - 1) == '\"'
+                ? message.substring(0, message.length() - 1)
+                : message;
+    }
+
+    private String replaceEscapedQuoteWithRegularQuote(String message) {
+        return message.replaceAll("\\\\\"", "\"");
     }
 }
