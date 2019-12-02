@@ -1,26 +1,25 @@
 package com.gorlah.kappabot.command;
 
+import lombok.Getter;
+import org.jetbrains.annotations.NotNull;
+
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
-public class CommandPayload {
-    private static final Pattern REGEX = Pattern.compile("\"[^\"\\\\]*(?:\\\\.[^\"\\\\]*)*\"|\\S+");
+public class CommandPayload implements Iterable<String> {
 
-    private ArrayList<String> command;
+    private final List<String> command;
 
-    private ArrayList<String> parameters = new ArrayList<>();
+    private List<String> parameters = new ArrayList<>();
 
-    private String calledBy;
+    @Getter
+    private CommandMetadata metadata;
 
-    private int commandPointer;
-
-    public CommandPayload(String prefix, String command, String calledBy) {
-        this.command = parseCommand(prefix, command);
-        this.commandPointer = -1;
-        this.calledBy = calledBy;
+    public CommandPayload(List<String> command, CommandMetadata metadata) {
+        this.command = Collections.unmodifiableList(command);
+        this.metadata = metadata;
     }
 
     public List<String> getParameters() {
@@ -31,47 +30,9 @@ public class CommandPayload {
         this.parameters.add(parameter);
     }
 
-    public String getCalledBy() {
-        return calledBy;
-    }
-
-    void beforeFirst() {
-        commandPointer = -1;
-    }
-
-    boolean next() {
-        return (++commandPointer) < command.size();
-    }
-
-    String getSubcommandString() {
-        return command.get(commandPointer);
-    }
-
-    private ArrayList<String> parseCommand(String prefix, String command) {
-        if (command.length() == prefix.length()) {
-            command = "";
-        } else {
-            command = command.substring(prefix.length() + 1);
-        }
-
-        ArrayList<String> messageList = new ArrayList<>();
-
-        Matcher regexMatcher = REGEX.matcher(command);
-
-        while (regexMatcher.find()) {
-            String messageToAdd = regexMatcher.group();
-
-            if (!messageToAdd.isEmpty() && messageToAdd.charAt(0) == '\"') {
-                messageToAdd = messageToAdd.substring(1);
-            }
-
-            if (!messageToAdd.isEmpty() && messageToAdd.charAt(messageToAdd.length() - 1) == '\"') {
-                messageToAdd = messageToAdd.substring(0, messageToAdd.length() - 1);
-            }
-
-            messageList.add(messageToAdd.replaceAll("\\\\\"", "\""));
-        }
-
-        return messageList;
+    @NotNull
+    @Override
+    public Iterator<String> iterator() {
+        return command.iterator();
     }
 }

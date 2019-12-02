@@ -13,22 +13,19 @@ public class CommandProcessor {
 
     private final RootCommand rootCommand;
 
-    public String process(CommandPayload command) {
+    public String process(CommandPayload payload) {
         Command currentSubcommand = rootCommand;
         Command nextSubcommand;
 
-        command.beforeFirst();
-        while (command.next()) {
-            String subcommandString = command.getSubcommandString();
-
-            if (command.getParameters().isEmpty() && "help".equals(subcommandString)) {
+        for (String subcommandString : payload) {
+            if (payload.getParameters().isEmpty() && "help".equals(subcommandString)) {
                 return currentSubcommand.getDetailedHelpText();
             }
 
             nextSubcommand = currentSubcommand.getChild(subcommandString);
 
             if (nextSubcommand == null) {
-                command.addParameter(command.getSubcommandString());
+                payload.addParameter(subcommandString);
             } else {
                 currentSubcommand = nextSubcommand;
             }
@@ -39,7 +36,7 @@ public class CommandProcessor {
         }
 
         try {
-            return currentSubcommand.process(command);
+            return currentSubcommand.process(payload);
         } catch (Exception e) {
             log.error(e.getMessage(), e);
             return currentSubcommand.getErrorText();

@@ -34,7 +34,7 @@ public class MemeManager {
         var url = writer.write(template);
 
         if (save) {
-            url = memeSaver.save(template, url, payload.getCalledBy(), parameters).getUrl();
+            url = memeSaver.save(template, url, payload.getMetadata().getAuthor(), parameters).getUrl();
         }
 
         return url;
