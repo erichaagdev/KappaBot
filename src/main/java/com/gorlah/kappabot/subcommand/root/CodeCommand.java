@@ -3,11 +3,11 @@ package com.gorlah.kappabot.subcommand.root;
 import com.gorlah.kappabot.command.Command;
 import com.gorlah.kappabot.command.CommandPayload;
 import com.gorlah.kappabot.subcommand.RootCommand;
-import com.gorlah.kappabot.subcommand.SkeletalKappaBotCommand;
+import com.gorlah.kappabot.subcommand.AbstractCommand;
 import org.springframework.stereotype.Component;
 
 @Component
-public class CodeCommand extends SkeletalKappaBotCommand {
+public class CodeCommand extends AbstractCommand {
 
     @Override
     public String getName() {

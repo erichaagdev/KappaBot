@@ -1,12 +1,12 @@
 package com.gorlah.kappabot.subcommand.root.meme;
 
-import com.gorlah.kappabot.subcommand.SkeletalKappaBotCommand;
+import com.gorlah.kappabot.subcommand.AbstractCommand;
 import com.gorlah.kappabot.subcommand.root.MemeCommand;
 import com.gorlah.kappabot.command.Command;
 import org.springframework.stereotype.Component;
 
 @Component
-public class MemeTest extends SkeletalKappaBotCommand {
+public class MemeTest extends AbstractCommand {
 
     @Override
     public String getName() {

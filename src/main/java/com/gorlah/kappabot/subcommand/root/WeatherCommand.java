@@ -3,14 +3,14 @@ package com.gorlah.kappabot.subcommand.root;
 import com.gorlah.kappabot.command.Command;
 import com.gorlah.kappabot.integration.openweather.OpenWeatherIntegration;
 import com.gorlah.kappabot.subcommand.RootCommand;
-import com.gorlah.kappabot.subcommand.SkeletalKappaBotCommand;
+import com.gorlah.kappabot.subcommand.AbstractCommand;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 
 @Component
 @RequiredArgsConstructor
-public class WeatherCommand extends SkeletalKappaBotCommand {
+public class WeatherCommand extends AbstractCommand {
 
     private final OpenWeatherIntegration openWeatherIntegration;
 

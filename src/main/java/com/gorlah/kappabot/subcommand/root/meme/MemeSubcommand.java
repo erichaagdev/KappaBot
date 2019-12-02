@@ -1,13 +1,13 @@
 package com.gorlah.kappabot.subcommand.root.meme;
 
 import com.gorlah.kappabot.command.CommandPayload;
-import com.gorlah.kappabot.subcommand.SkeletalKappaBotCommand;
+import com.gorlah.kappabot.subcommand.AbstractCommand;
 import com.gorlah.kappabot.subcommand.root.meme.util.creator.MemeCreationException;
 import lombok.extern.slf4j.Slf4j;
 import lombok.val;
 
 @Slf4j
-public abstract class MemeSubcommand extends SkeletalKappaBotCommand {
+public abstract class MemeSubcommand extends AbstractCommand {
 
     @Override
     public String process(CommandPayload payload) {
