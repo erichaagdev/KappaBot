@@ -14,6 +14,7 @@ import java.util.List;
 public class ImageSearch extends ImageSubcommand {
 
     private final ImageRepository imageRepository;
+    private final ImageHelper imageHelper;
 
     @Override
     public String getName() {
@@ -31,7 +32,7 @@ public class ImageSearch extends ImageSubcommand {
             return "You need to pass me a search query.";
         }
 
-        String alias = String.join("", parameters).replaceAll("'", "").trim();
+        String alias = imageHelper.stripQuery(parameters);
 
         if (alias.length() < 3) {
             return "Try a search query of 3 or more characters.";

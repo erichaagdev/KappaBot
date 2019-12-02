@@ -6,7 +6,6 @@ import lombok.RequiredArgsConstructor;
 import org.apache.commons.text.similarity.LongestCommonSubsequenceDistance;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Component
@@ -17,8 +16,16 @@ class ImageHelper {
 
     private final ImageRepository imageRepository;
 
-    Image getImage(ArrayList<String> parameters) {
-        return getImage(String.join("", parameters).replaceAll("'", "").trim());
+    public String stripQuery(List<String> query) {
+        return stripQuery(String.join("", query));
+    }
+
+    public String stripQuery(String query) {
+        return query.replaceAll("'", "").replaceAll("\\s", "").trim();
+    }
+
+    Image getImage(List<String> parameters) {
+        return getImage(stripQuery(parameters));
     }
 
     Image getImage(String alias) {
