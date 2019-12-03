@@ -9,13 +9,13 @@ import java.util.stream.Collectors;
 
 @Component
 @RequiredArgsConstructor
-public class SlashdotFunction implements BotFunction {
+public class MobileSlashdotTitleFunction implements BotFunction {
 
-    private final SlashdotParser slashdotParser;
+    private final MobileSlashdotTitleParser slashdotParser;
 
     @Override
     public boolean shouldProcess(String message) {
-        return slashdotParser.find(message);
+        return slashdotParser.containsMobileSlashdotUrl(message);
     }
 
     @Override
