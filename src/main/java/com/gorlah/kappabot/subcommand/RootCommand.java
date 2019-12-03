@@ -1,9 +1,10 @@
 package com.gorlah.kappabot.subcommand;
 
+import com.gorlah.kappabot.command.Command;
 import org.springframework.stereotype.Component;
 
 @Component
-public class RootCommand extends Subcommand {
+public class RootCommand extends AbstractCommand {
 
     @Override
     public String getName() {
@@ -16,12 +17,17 @@ public class RootCommand extends Subcommand {
     }
 
     @Override
+    public String getUsageInformation() {
+        return null;
+    }
+
+    @Override
     public boolean isShownInHelp() {
         return true;
     }
 
     @Override
-    public Class<? extends Subcommand> getParent() {
+    public Class<? extends Command> getParent() {
         throw new UnsupportedOperationException();
     }
 }

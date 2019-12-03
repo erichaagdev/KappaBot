@@ -1,6 +1,6 @@
 package com.gorlah.kappabot.rest;
 
-import com.gorlah.kappabot.command.Command;
+import com.gorlah.kappabot.command.CommandPayload;
 import com.gorlah.kappabot.command.CommandProcessor;
 import com.gorlah.kappabot.rest.model.CommandRequest;
 import lombok.RequiredArgsConstructor;
@@ -29,7 +29,7 @@ public class CommandService {
         if (request == null) {
             throw new RuntimeException();
         }
-        var command = new Command(commandPrefix, request.getCommand(), request.getUser());
+        var command = new CommandPayload(commandPrefix, request.getCommand(), request.getUser());
         return formatResponse(commandProcessor.process(command), request.getUser());
     }
 
