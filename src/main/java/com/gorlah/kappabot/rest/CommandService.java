@@ -1,7 +1,7 @@
 package com.gorlah.kappabot.rest;
 
-import com.gorlah.kappabot.command.CommandPayloadBuilder;
 import com.gorlah.kappabot.command.CommandProcessor;
+import com.gorlah.kappabot.function.FunctionProcessor;
 import com.gorlah.kappabot.rest.model.CommandRequest;
 import com.gorlah.kappabot.rest.model.RestCommandMetadata;
 import lombok.RequiredArgsConstructor;
@@ -24,15 +24,15 @@ public class CommandService {
     private String commandPrefix;
 
     private final CommandProcessor commandProcessor;
-    private final CommandPayloadBuilder commandPayloadBuilder;
+    private final FunctionProcessor functionProcessor;
 
     @PostMapping("/command/run")
     public String runCommand(@RequestBody CommandRequest request) {
         if (request == null) {
             throw new RuntimeException();
         }
-        var command = commandPayloadBuilder.parseMessageAndBuild(new RestCommandMetadata(request));
-        return formatResponse(commandProcessor.process(command), request.getUser());
+
+        return formatResponse(functionProcessor.process(new RestCommandMetadata(request)), request.getUser());
     }
 
     private String formatResponse(String response, String user) {
