@@ -50,13 +50,7 @@ public class DiscordBot extends ListenerAdapter {
             return;
         }
 
-        long start = System.currentTimeMillis();
-
         event.getChannel().sendMessage(processMessageEvent(event)).queue();
-
-        long end = System.currentTimeMillis();
-
-        log.info("Call returned in " + (end - start) + " ms");
     }
 
     private String processMessageEvent(MessageReceivedEvent event) {
