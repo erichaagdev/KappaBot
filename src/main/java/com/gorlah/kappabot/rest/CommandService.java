@@ -3,7 +3,6 @@ package com.gorlah.kappabot.rest;
 import com.gorlah.kappabot.command.CommandProcessor;
 import com.gorlah.kappabot.function.FunctionProcessor;
 import com.gorlah.kappabot.rest.model.CommandRequest;
-import com.gorlah.kappabot.rest.model.RestCommandMetadata;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.text.StringSubstitutor;
 import org.springframework.beans.factory.annotation.Value;
@@ -32,14 +31,14 @@ public class CommandService {
             throw new RuntimeException();
         }
 
-        return formatResponse(functionProcessor.process(new RestCommandMetadata(request)), request.getUser());
+        return formatResponse(functionProcessor.process(request), request.getAuthor());
     }
 
-    private String formatResponse(String response, String user) {
+    private String formatResponse(String response, String author) {
         Map<String, String> values = new HashMap<>();
 
-        values.put("user.name", user);
-        values.put("user.mention", user);
+        values.put("user.name", author);
+        values.put("user.mention", author);
 
         return StringSubstitutor.replace(response, values);
     }

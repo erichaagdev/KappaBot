@@ -15,17 +15,16 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class MobileSlashdotTitleParser {
 
-    private final Pattern MOBILE_SLASHDOT_ARTICLE_URL_PATTERN
-            = Pattern.compile("https://m\\.slashdot\\.org/story/\\d+");
+    private final Pattern mobileSlashdotArticleUrlPattern = Pattern.compile("https://m\\.slashdot\\.org/story/\\d+");
 
     private final MobileSlashdotTitleFetcher mobileSlashdotTitleFetcher;
 
     public boolean containsMobileSlashdotUrl(String message) {
-        return MOBILE_SLASHDOT_ARTICLE_URL_PATTERN.matcher(message).find();
+        return mobileSlashdotArticleUrlPattern.matcher(message).find();
     }
 
     public List<String> getTitles(String message) {
-        return MOBILE_SLASHDOT_ARTICLE_URL_PATTERN.matcher(message).results()
+        return mobileSlashdotArticleUrlPattern.matcher(message).results()
                 .parallel()
                 .map(MatchResult::group)
                 .map(mobileSlashdotTitleFetcher::getTitle)

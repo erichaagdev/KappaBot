@@ -1,6 +1,6 @@
 package com.gorlah.kappabot.function.command;
 
-import com.gorlah.kappabot.command.CommandMetadata;
+import com.gorlah.kappabot.function.BotRequestMetadata;
 import com.gorlah.kappabot.command.CommandPayloadBuilder;
 import com.gorlah.kappabot.command.CommandProcessor;
 import com.gorlah.kappabot.function.BotFunction;
@@ -24,7 +24,7 @@ public class CommandFunction implements BotFunction {
     }
 
     @Override
-    public String process(CommandMetadata metadata) {
+    public String process(BotRequestMetadata metadata) {
         return commandProcessor.process(commandPayloadBuilder.parseMessageAndBuild(metadata));
     }
 

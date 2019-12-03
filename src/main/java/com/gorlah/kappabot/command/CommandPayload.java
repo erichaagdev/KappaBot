@@ -1,5 +1,6 @@
 package com.gorlah.kappabot.command;
 
+import com.gorlah.kappabot.function.BotRequestMetadata;
 import lombok.Getter;
 import org.jetbrains.annotations.NotNull;
 
@@ -15,9 +16,9 @@ public class CommandPayload implements Iterable<String> {
     private List<String> parameters = new ArrayList<>();
 
     @Getter
-    private CommandMetadata metadata;
+    private BotRequestMetadata metadata;
 
-    public CommandPayload(List<String> command, CommandMetadata metadata) {
+    public CommandPayload(List<String> command, BotRequestMetadata metadata) {
         this.command = Collections.unmodifiableList(command);
         this.metadata = metadata;
     }

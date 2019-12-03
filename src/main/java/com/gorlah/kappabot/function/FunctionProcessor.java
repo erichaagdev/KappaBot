@@ -1,6 +1,5 @@
 package com.gorlah.kappabot.function;
 
-import com.gorlah.kappabot.command.CommandMetadata;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -13,7 +12,7 @@ public class FunctionProcessor {
 
     private final Set<BotFunction> botFunctions;
 
-    public String process(CommandMetadata metadata) {
+    public String process(BotRequestMetadata metadata) {
         return botFunctions.stream()
                 .filter(botFunction -> botFunction.shouldProcess(metadata.getMessage()))
                 .map(botFunction -> botFunction.process(metadata))

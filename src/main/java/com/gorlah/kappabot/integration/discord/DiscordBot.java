@@ -3,6 +3,7 @@ package com.gorlah.kappabot.integration.discord;
 import com.google.common.base.Strings;
 import com.gorlah.kappabot.function.FunctionProcessor;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.entities.Activity;
@@ -17,6 +18,7 @@ import javax.security.auth.login.LoginException;
 import java.util.HashMap;
 import java.util.Map;
 
+@Slf4j
 @Component
 @RequiredArgsConstructor
 public class DiscordBot extends ListenerAdapter {
@@ -48,9 +50,17 @@ public class DiscordBot extends ListenerAdapter {
             return;
         }
 
-        event.getChannel()
-                .sendMessage(formatResponse(functionProcessor.process(new DiscordCommandMetadata(event)), event))
-                .queue();
+        long start = System.currentTimeMillis();
+
+        event.getChannel().sendMessage(processMessageEvent(event)).queue();
+
+        long end = System.currentTimeMillis();
+
+        log.info("Call returned in " + (end - start) + " ms");
+    }
+
+    private String processMessageEvent(MessageReceivedEvent event) {
+        return formatResponse(functionProcessor.process(new DiscordRequestMetadata(event)), event);
     }
 
     private String formatResponse(String response, MessageReceivedEvent event) {

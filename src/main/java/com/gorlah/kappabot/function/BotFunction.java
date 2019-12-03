@@ -1,7 +1,5 @@
 package com.gorlah.kappabot.function;
 
-import com.gorlah.kappabot.command.CommandMetadata;
-
 public interface BotFunction {
 
     /**
@@ -18,5 +16,5 @@ public interface BotFunction {
      * @param metadata metadata related to the bot request
      * @return the response based on the message
      */
-    String process(CommandMetadata metadata);
+    String process(BotRequestMetadata metadata);
 }

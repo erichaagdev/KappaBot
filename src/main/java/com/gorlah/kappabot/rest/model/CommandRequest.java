@@ -1,10 +1,11 @@
 package com.gorlah.kappabot.rest.model;
 
-import lombok.Data;
+import com.gorlah.kappabot.function.BotRequestMetadata;
+import lombok.Value;
 
-@Data
-public class CommandRequest {
+@Value
+public class CommandRequest implements BotRequestMetadata {
 
-    private String command;
-    private String user;
+    private String author;
+    private String message;
 }

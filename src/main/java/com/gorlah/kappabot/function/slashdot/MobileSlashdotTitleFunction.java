@@ -1,6 +1,6 @@
 package com.gorlah.kappabot.function.slashdot;
 
-import com.gorlah.kappabot.command.CommandMetadata;
+import com.gorlah.kappabot.function.BotRequestMetadata;
 import com.gorlah.kappabot.function.BotFunction;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -19,7 +19,7 @@ public class MobileSlashdotTitleFunction implements BotFunction {
     }
 
     @Override
-    public String process(CommandMetadata metadata) {
+    public String process(BotRequestMetadata metadata) {
         return slashdotParser.getTitles(metadata.getMessage()).stream()
                 .map(title -> "> " + title)
                 .collect(Collectors.joining("\n"));

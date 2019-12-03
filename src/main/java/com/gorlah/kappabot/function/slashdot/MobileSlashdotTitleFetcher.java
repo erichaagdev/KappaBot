@@ -20,9 +20,9 @@ public class MobileSlashdotTitleFetcher {
     private static final String DESKTOP_SLASHDOT_URL = "https://slashdot.org/story/";
 
     @Value("${slashdot.titleFetcher.userAgent}")
-    private final String USER_AGENT;
+    private String userAgent;
 
-    private final Pattern MOBILE_SLASHDOT_URL_PATTERN = Pattern.compile("https://m\\.slashdot\\.org/story/");
+    private final Pattern mobileSlashdotUrlPattern = Pattern.compile("https://m\\.slashdot\\.org/story/");
 
     private final LoadingCache<String, String> slashdotTitleCache =
             Caffeine.newBuilder()
@@ -37,7 +37,7 @@ public class MobileSlashdotTitleFetcher {
         try {
             Document doc = Jsoup.connect(replaceMobileUrlWithDesktopUrl(mobileUrl))
                     .timeout(10000)
-                    .userAgent(USER_AGENT)
+                    .userAgent(userAgent)
                     .get();
 
             return doc.select(".story-title > a").text();
@@ -49,6 +49,6 @@ public class MobileSlashdotTitleFetcher {
     }
 
     private String replaceMobileUrlWithDesktopUrl(String mobileUrl) {
-        return MOBILE_SLASHDOT_URL_PATTERN.matcher(mobileUrl).replaceAll(DESKTOP_SLASHDOT_URL);
+        return mobileSlashdotUrlPattern.matcher(mobileUrl).replaceAll(DESKTOP_SLASHDOT_URL);
     }
 }
