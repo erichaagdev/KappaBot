@@ -1,12 +1,11 @@
-package com.gorlah.kappabot.subcommand.image;
+package com.gorlah.kappabot.subcommand.root.image;
 
-import com.gorlah.kappabot.command.Command;
+import com.gorlah.kappabot.command.CommandPayload;
 import com.gorlah.kappabot.jpa.entity.Image;
 import com.gorlah.kappabot.jpa.repository.ImageRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.val;
 import org.springframework.stereotype.Component;
-
-import java.util.ArrayList;
 
 @Component
 @RequiredArgsConstructor
@@ -45,7 +44,7 @@ public class ImageAdd extends ImageSubcommand {
         image = new Image();
         image.setAlias(query);
         image.setUrl(parameters.get(parameters.size() - 1));
-        image.setUser(command.getCalledBy());
+        image.setUser(payload.getCalledBy());
 
         image = imageRepository.save(image);
 

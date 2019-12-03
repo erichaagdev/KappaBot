@@ -1,4 +1,4 @@
-package com.gorlah.kappabot.subcommand.image;
+package com.gorlah.kappabot.subcommand.root.image;
 
 import com.gorlah.kappabot.jpa.entity.Image;
 import com.gorlah.kappabot.jpa.repository.ImageRepository;
@@ -6,7 +6,6 @@ import lombok.RequiredArgsConstructor;
 import org.apache.commons.text.similarity.LongestCommonSubsequenceDistance;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Component
