@@ -25,7 +25,7 @@ public class SlashdotParser {
 
     private final LoadingCache<String, String> slashdotTitleCache =
             Caffeine.newBuilder()
-                    .expireAfterWrite(Duration.ofHours(1))
+                    .expireAfterAccess(Duration.ofDays(1))
                     .build(this::getTitle);
 
     public boolean find(String message) {
