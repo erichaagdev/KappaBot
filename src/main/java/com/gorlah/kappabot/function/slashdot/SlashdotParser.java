@@ -18,10 +18,18 @@ import java.util.stream.Collectors;
 @Component
 public class SlashdotParser {
 
-    private static final Pattern MOBILE_SLASHDOT = Pattern.compile("https://m\\.slashdot\\.org/story/\\d+");
-
     private static final String USER_AGENT = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 " +
             "(KHTML, like Gecko) Chrome/77.0.3865.120 Safari/537.36";
+
+    private static final String MOBILE_SLASHDOT_URL_REGEX = "https://m\\.slashdot\\.org/story/";
+
+    private static final String DESKTOP_SLASHDOT_URL = "https://slashdot.org/story/";
+
+    private final Pattern MOBILE_SLASHDOT_URL_PATTERN =
+            Pattern.compile(MOBILE_SLASHDOT_URL_REGEX);
+
+    private final Pattern MOBILE_SLASHDOT_ARTICLE_URL_PATTERN =
+            Pattern.compile(MOBILE_SLASHDOT_URL_REGEX + "\\d+");
 
     private final LoadingCache<String, String> slashdotTitleCache =
             Caffeine.newBuilder()
@@ -29,11 +37,11 @@ public class SlashdotParser {
                     .build(this::getTitle);
 
     public boolean find(String message) {
-        return MOBILE_SLASHDOT.matcher(message).find();
+        return MOBILE_SLASHDOT_ARTICLE_URL_PATTERN.matcher(message).find();
     }
 
     public List<String> getTitles(String message) {
-        return MOBILE_SLASHDOT.matcher(message).results()
+        return MOBILE_SLASHDOT_ARTICLE_URL_PATTERN.matcher(message).results()
                 .parallel()
                 .map(MatchResult::group)
                 .map(slashdotTitleCache::get)
@@ -42,10 +50,8 @@ public class SlashdotParser {
     }
 
     private String getTitle(String mobileUrl) {
-        String url = mobileUrl.replaceAll("https://m\\.slashdot\\.org/story/", "https://slashdot.org/story/");
-
         try {
-            Document doc = Jsoup.connect(url)
+            Document doc = Jsoup.connect(replaceMobileUrlWithDesktopUrl(mobileUrl))
                     .timeout(10000)
                     .userAgent(USER_AGENT)
                     .get();
@@ -56,5 +62,9 @@ public class SlashdotParser {
         }
 
         return null;
+    }
+
+    private String replaceMobileUrlWithDesktopUrl(String mobileUrl) {
+        return MOBILE_SLASHDOT_URL_PATTERN.matcher(mobileUrl).replaceAll(DESKTOP_SLASHDOT_URL);
     }
 }
