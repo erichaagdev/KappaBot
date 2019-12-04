@@ -2,6 +2,7 @@ package com.gorlah.kappabot.integration.discord;
 
 import com.google.common.base.Strings;
 import com.gorlah.kappabot.command.CommandPayload;
+import com.gorlah.kappabot.command.CommandPayloadBuilder;
 import com.gorlah.kappabot.command.CommandProcessor;
 import com.gorlah.kappabot.function.SlashdotParser;
 import lombok.RequiredArgsConstructor;
@@ -31,13 +32,13 @@ public class DiscordBot extends ListenerAdapter {
     private String botStatus;
 
     private final CommandProcessor commandProcessor;
+    private final CommandPayloadBuilder commandPayloadBuilder;
     private final DiscordIntegration discordIntegration;
 
     private JDA bot;
 
     @PostConstruct
-    private void initialize()
-            throws LoginException {
+    private void initialize() throws LoginException {
         if (discordIntegration.isEnabled()) {
             bot = new JDABuilder(discordIntegration.getToken())
                     .addEventListeners(this)
@@ -52,7 +53,9 @@ public class DiscordBot extends ListenerAdapter {
             return;
         }
 
-        String message = event.getMessage().getContentRaw();
+        DiscordCommandMetadata metadata = new DiscordCommandMetadata(event);
+
+        String message = metadata.getMessage();
         StringBuilder response = new StringBuilder();
 
         if (SlashdotParser.find(message)) {
@@ -71,7 +74,7 @@ public class DiscordBot extends ListenerAdapter {
                 return;
             }
 
-            CommandPayload command = new CommandPayload(commandPrefix, message, event.getAuthor().getName());
+            CommandPayload command = commandPayloadBuilder.parseMessageAndBuild(metadata);
 
             response = new StringBuilder(commandProcessor.process(command));
             response = new StringBuilder(formatResponse(response.toString(), event));

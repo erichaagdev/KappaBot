@@ -44,7 +44,7 @@ public class ImageAdd extends ImageSubcommand {
         image = new Image();
         image.setAlias(query);
         image.setUrl(parameters.get(parameters.size() - 1));
-        image.setUser(payload.getCalledBy());
+        image.setUser(payload.getMetadata().getAuthor());
 
         image = imageRepository.save(image);
 
