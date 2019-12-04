@@ -25,7 +25,6 @@ public class MobileSlashdotTitleParser {
 
     public List<String> getTitles(String message) {
         return mobileSlashdotArticleUrlPattern.matcher(message).results()
-                .parallel()
                 .map(MatchResult::group)
                 .map(mobileSlashdotTitleFetcher::getTitle)
                 .filter(Objects::nonNull)
