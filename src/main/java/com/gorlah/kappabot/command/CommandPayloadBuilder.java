@@ -52,13 +52,11 @@ public class CommandPayloadBuilder {
     }
 
     private String removeLeadingQuoteIfNecessary(String message) {
-        return !message.isEmpty() && message.charAt(0) == '\"' ? message.substring(1) : message;
+        return message.startsWith("\"") ? message.substring(1) : message;
     }
 
     private String removeTrailingQuoteIfNecessary(String message) {
-        return !message.isEmpty() && message.charAt(message.length() - 1) == '\"'
-                ? message.substring(0, message.length() - 1)
-                : message;
+        return message.endsWith("\"") ? message.substring(0, message.length() - 1) : message;
     }
 
     private String replaceEscapedQuoteWithRegularQuote(String message) {
