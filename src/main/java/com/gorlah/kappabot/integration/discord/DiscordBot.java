@@ -1,11 +1,9 @@
 package com.gorlah.kappabot.integration.discord;
 
 import com.google.common.base.Strings;
-import com.gorlah.kappabot.command.CommandPayload;
-import com.gorlah.kappabot.command.CommandPayloadBuilder;
-import com.gorlah.kappabot.command.CommandProcessor;
-import com.gorlah.kappabot.function.SlashdotParser;
+import com.gorlah.kappabot.function.FunctionProcessor;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.entities.Activity;
@@ -17,10 +15,10 @@ import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
 import javax.security.auth.login.LoginException;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+@Slf4j
 @Component
 @RequiredArgsConstructor
 public class DiscordBot extends ListenerAdapter {
@@ -31,9 +29,8 @@ public class DiscordBot extends ListenerAdapter {
     @Value("${discord.bot.status}")
     private String botStatus;
 
-    private final CommandProcessor commandProcessor;
-    private final CommandPayloadBuilder commandPayloadBuilder;
     private final DiscordIntegration discordIntegration;
+    private final FunctionProcessor functionProcessor;
 
     private JDA bot;
 
@@ -53,38 +50,11 @@ public class DiscordBot extends ListenerAdapter {
             return;
         }
 
-        DiscordCommandMetadata metadata = new DiscordCommandMetadata(event);
+        event.getChannel().sendMessage(processMessageEvent(event)).queue();
+    }
 
-        String message = metadata.getMessage();
-        StringBuilder response = new StringBuilder();
-
-        if (SlashdotParser.find(message)) {
-            ArrayList<String> titles = SlashdotParser.getTitles(message);
-
-            for (int i = 0; i < titles.size(); i++) {
-                if (i > 0) {
-                    response.append("\n");
-                }
-
-                response.append("> ").append(titles.get(i));
-            }
-        } else {
-            if (message.length() < commandPrefix.length()
-                    || !commandPrefix.equalsIgnoreCase(message.substring(0, commandPrefix.length()))) {
-                return;
-            }
-
-            CommandPayload command = commandPayloadBuilder.parseMessageAndBuild(metadata);
-
-            response = new StringBuilder(commandProcessor.process(command));
-            response = new StringBuilder(formatResponse(response.toString(), event));
-        }
-
-        if (response.length() > 0) {
-            event.getChannel()
-                    .sendMessage(response.toString())
-                    .queue();
-        }
+    private String processMessageEvent(MessageReceivedEvent event) {
+        return formatResponse(functionProcessor.process(new DiscordRequestMetadata(event)), event);
     }
 
     private String formatResponse(String response, MessageReceivedEvent event) {

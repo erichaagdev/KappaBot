@@ -1,5 +1,6 @@
 package com.gorlah.kappabot.command;
 
+import com.gorlah.kappabot.function.BotRequestMetadata;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -20,7 +21,7 @@ public class CommandPayloadBuilder {
     @Value("${discord.command.prefix}")
     private String commandPrefix;
 
-    public CommandPayload parseMessageAndBuild(CommandMetadata metadata) {
+    public CommandPayload parseMessageAndBuild(BotRequestMetadata metadata) {
         return new CommandPayload(parseMessage(metadata.getMessage()), metadata);
     }
 

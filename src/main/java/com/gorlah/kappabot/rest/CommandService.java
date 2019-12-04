@@ -1,9 +1,8 @@
 package com.gorlah.kappabot.rest;
 
-import com.gorlah.kappabot.command.CommandPayloadBuilder;
 import com.gorlah.kappabot.command.CommandProcessor;
+import com.gorlah.kappabot.function.FunctionProcessor;
 import com.gorlah.kappabot.rest.model.CommandRequest;
-import com.gorlah.kappabot.rest.model.RestCommandMetadata;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.text.StringSubstitutor;
 import org.springframework.beans.factory.annotation.Value;
@@ -24,22 +23,22 @@ public class CommandService {
     private String commandPrefix;
 
     private final CommandProcessor commandProcessor;
-    private final CommandPayloadBuilder commandPayloadBuilder;
+    private final FunctionProcessor functionProcessor;
 
     @PostMapping("/command/run")
     public String runCommand(@RequestBody CommandRequest request) {
         if (request == null) {
             throw new RuntimeException();
         }
-        var command = commandPayloadBuilder.parseMessageAndBuild(new RestCommandMetadata(request));
-        return formatResponse(commandProcessor.process(command), request.getUser());
+
+        return formatResponse(functionProcessor.process(request), request.getAuthor());
     }
 
-    private String formatResponse(String response, String user) {
+    private String formatResponse(String response, String author) {
         Map<String, String> values = new HashMap<>();
 
-        values.put("user.name", user);
-        values.put("user.mention", user);
+        values.put("user.name", author);
+        values.put("user.mention", author);
 
         return StringSubstitutor.replace(response, values);
     }
