@@ -54,7 +54,7 @@ public abstract class AbstractCommand implements Command {
 
     @Override
     public String getErrorText() {
-        return "Sorry, ${user.mention}. I ran into a problem processing your command.";
+        return "Sorry, ${authorMention}. I ran into a problem processing your command.";
     }
 
     @Override

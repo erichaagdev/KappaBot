@@ -13,7 +13,7 @@ public class RootCommand extends AbstractCommand {
 
     @Override
     public String getHelpText() {
-        return "Hey, ${user.mention}! My name is KappaBot.";
+        return "Hey, ${authorMention}! My name is KappaBot.";
     }
 
     @Override

@@ -6,6 +6,11 @@ import lombok.Value;
 @Value
 public class CommandRequest implements BotRequestMetadata {
 
-    private String author;
-    private String message;
+    private final String author;
+    private final String message;
+
+    @Override
+    public String getAuthorMention() {
+        return author;
+    }
 }

@@ -11,11 +11,13 @@ import java.util.stream.Collectors;
 public class FunctionProcessor {
 
     private final Set<BotFunction> botFunctions;
+    private final BotResponseFormatter responseFormatter;
 
     public String process(BotRequestMetadata metadata) {
         return botFunctions.stream()
                 .filter(botFunction -> botFunction.shouldProcess(metadata.getMessage()))
                 .map(botFunction -> botFunction.process(metadata))
+                .map(response -> responseFormatter.format(response, metadata))
                 .collect(Collectors.joining("\n"));
     }
 }

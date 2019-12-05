@@ -30,9 +30,9 @@ public class HelloCommand extends AbstractCommand {
         val parameters = payload.getParameters();
 
         if (parameters != null && !parameters.isEmpty() && "there".equals(parameters.get(0))) {
-            return "General ${user.mention}!";
+            return "General ${authorMention}!";
         }
 
-        return "Hey, ${user.mention}!";
+        return "Hey, ${authorMention}!";
     }
 }

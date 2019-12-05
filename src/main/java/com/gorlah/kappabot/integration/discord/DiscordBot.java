@@ -9,14 +9,11 @@ import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.entities.Activity;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
-import org.apache.commons.text.StringSubstitutor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
 import javax.security.auth.login.LoginException;
-import java.util.HashMap;
-import java.util.Map;
 
 @Slf4j
 @Component
@@ -50,19 +47,8 @@ public class DiscordBot extends ListenerAdapter {
             return;
         }
 
-        event.getChannel().sendMessage(processMessageEvent(event)).queue();
-    }
-
-    private String processMessageEvent(MessageReceivedEvent event) {
-        return formatResponse(functionProcessor.process(new DiscordRequestMetadata(event)), event);
-    }
-
-    private String formatResponse(String response, MessageReceivedEvent event) {
-        Map<String, String> values = new HashMap<>();
-
-        values.put("user.name", event.getMessage().getAuthor().getName());
-        values.put("user.mention", event.getMessage().getAuthor().getAsMention());
-
-        return StringSubstitutor.replace(response, values);
+        event.getChannel()
+                .sendMessage(functionProcessor.process(new DiscordRequestMetadata(event)))
+                .queue();
     }
 }
