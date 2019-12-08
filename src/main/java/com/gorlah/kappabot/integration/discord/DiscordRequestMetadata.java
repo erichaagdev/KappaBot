@@ -1,5 +1,6 @@
 package com.gorlah.kappabot.integration.discord;
 
+import com.gorlah.kappabot.function.BotRequestEndpoint;
 import com.gorlah.kappabot.function.BotRequestMetadata;
 import lombok.Value;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
@@ -15,5 +16,10 @@ public class DiscordRequestMetadata implements BotRequestMetadata {
         this.author = event.getAuthor().getName();
         this.authorMention = event.getAuthor().getAsMention();
         this.message = event.getMessage().getContentRaw();
+    }
+
+    @Override
+    public BotRequestEndpoint getEndpoint() {
+        return BotRequestEndpoint.DISCORD;
     }
 }

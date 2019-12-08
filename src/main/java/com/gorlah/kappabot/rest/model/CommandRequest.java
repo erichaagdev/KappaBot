@@ -1,5 +1,6 @@
 package com.gorlah.kappabot.rest.model;
 
+import com.gorlah.kappabot.function.BotRequestEndpoint;
 import com.gorlah.kappabot.function.BotRequestMetadata;
 import lombok.Value;
 
@@ -12,5 +13,10 @@ public class CommandRequest implements BotRequestMetadata {
     @Override
     public String getAuthorMention() {
         return author;
+    }
+
+    @Override
+    public BotRequestEndpoint getEndpoint() {
+        return BotRequestEndpoint.REST;
     }
 }

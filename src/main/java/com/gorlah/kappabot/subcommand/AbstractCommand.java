@@ -12,6 +12,11 @@ import java.util.Collections;
 import java.util.Objects;
 import java.util.TreeMap;
 
+import static com.gorlah.kappabot.message.MarkdownVariables.CODE_BEGIN;
+import static com.gorlah.kappabot.message.MarkdownVariables.CODE_BLOCK_BEGIN;
+import static com.gorlah.kappabot.message.MarkdownVariables.CODE_BLOCK_END;
+import static com.gorlah.kappabot.message.MarkdownVariables.CODE_END;
+
 public abstract class AbstractCommand implements Command {
 
     private TreeMap<String, Command> children = new TreeMap<>();
@@ -25,10 +30,11 @@ public abstract class AbstractCommand implements Command {
         StringBuilder builder = new StringBuilder(getHelpText());
 
         if (!children.isEmpty()) {
-            builder.append(" Try adding one of the following subcommands to `")
+            builder.append(" Try adding one of the following subcommands to ").append(CODE_BEGIN)
                     .append(getAbsoluteCommandString())
-                    .append("`:")
-                    .append("```");
+                    .append(CODE_END)
+                    .append(":")
+                    .append(CODE_BLOCK_BEGIN);
 
             int padding = children
                     .values()
@@ -46,7 +52,7 @@ public abstract class AbstractCommand implements Command {
                 }
             }
 
-            builder.append("```");
+            builder.append(CODE_BLOCK_END);
         }
 
         return builder.toString();
@@ -59,9 +65,9 @@ public abstract class AbstractCommand implements Command {
 
     @Override
     public String getIncorrectUsageText() {
-        StringBuilder builder = new StringBuilder("Try adding one of the following subcommands to `")
-                .append(getAbsoluteCommandString())
-                .append("`:");
+        StringBuilder builder = new StringBuilder("Try adding one of the following subcommands to ")
+                .append(CODE_BEGIN).append(getAbsoluteCommandString()).append(CODE_END)
+                .append(":");
 
         children.values().stream()
                 .filter(Command::isShownInHelp)
@@ -71,9 +77,8 @@ public abstract class AbstractCommand implements Command {
             builder.deleteCharAt(builder.length() - 1);
         }
 
-        builder.append("\nOr use `")
-                .append(getAbsoluteCommandString())
-                .append(" help`");
+        builder.append("\nOr use ").append(CODE_BEGIN).append(getAbsoluteCommandString()).append(" help")
+                .append(CODE_END);
 
         return builder.toString();
     }
