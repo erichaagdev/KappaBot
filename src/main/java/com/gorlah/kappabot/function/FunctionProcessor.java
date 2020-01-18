@@ -3,6 +3,7 @@ package com.gorlah.kappabot.function;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -14,8 +15,8 @@ public class FunctionProcessor {
 
     public String process(BotRequestMetadata metadata) {
         return botFunctions.stream()
-                .filter(botFunction -> botFunction.shouldProcess(metadata.getMessage()))
                 .map(botFunction -> botFunction.process(metadata))
+                .flatMap(Optional::stream)
                 .collect(Collectors.joining("\n"));
     }
 }
