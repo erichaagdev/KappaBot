@@ -13,7 +13,7 @@ plugins {
     java
     idea
     id("io.franzbecker.gradle-lombok") version "3.1.0"
-    id("org.springframework.boot") version "2.2.1.RELEASE"
+    id("org.springframework.boot") version "2.2.3.RELEASE"
     id("io.spring.dependency-management") version "1.0.8.RELEASE"
 }
 
@@ -48,16 +48,16 @@ tasks {
 dependencies {
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
     implementation("org.springframework.boot:spring-boot-starter-web")
-    implementation("com.github.ben-manes.caffeine:caffeine:2.8.0")
-    implementation("net.dv8tion:JDA:4.0.0_39") {
+    implementation("com.github.ben-manes.caffeine:caffeine:2.8.1")
+    implementation("net.dv8tion:JDA:4.1.0_100") {
         exclude("club.minnced:opus-java")
     }
-    implementation("org.jsoup:jsoup:1.10.2")
+    implementation("org.jsoup:jsoup:1.12.1")
     implementation("org.apache.commons:commons-text:1.8")
-    implementation("com.google.guava:guava:28.1-jre")
+    implementation("com.google.guava:guava:28.2-jre")
 
     // Database drivers
-    implementation("mysql:mysql-connector-java:8.0.18")
+    implementation("mysql:mysql-connector-java:8.0.19")
     implementation("com.h2database:h2:1.4.200")
 
     // Test dependencies
