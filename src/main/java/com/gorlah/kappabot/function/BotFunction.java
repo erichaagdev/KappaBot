@@ -1,20 +1,14 @@
 package com.gorlah.kappabot.function;
 
+import java.util.Optional;
+
 public interface BotFunction {
 
     /**
-     * Takes in a message and returns whether or not it meets a specified condition.
-     *
-     * @param message the message to check
-     * @return whether or not the message meets a specified condition
-     */
-    boolean shouldProcess(String message);
-
-    /**
-     * The method to be activated based on the above condition.
+     * Performs processing on the specified request if possible.
      *
      * @param metadata metadata related to the bot request
      * @return the response based on the message
      */
-    String process(BotRequestMetadata metadata);
+    Optional<String> process(BotRequestMetadata metadata);
 }

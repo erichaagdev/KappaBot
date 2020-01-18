@@ -1,7 +1,9 @@
 package com.gorlah.kappabot.integration.discord;
 
 import com.google.common.base.Strings;
+import com.gorlah.kappabot.function.BotRequestMetadata;
 import com.gorlah.kappabot.function.FunctionProcessor;
+import com.gorlah.kappabot.integration.ImmutableBotRequestMetadata;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import net.dv8tion.jda.api.JDA;
@@ -54,7 +56,15 @@ public class DiscordBot extends ListenerAdapter {
     }
 
     private String processMessageEvent(MessageReceivedEvent event) {
-        return formatResponse(functionProcessor.process(new DiscordRequestMetadata(event)), event);
+        return formatResponse(functionProcessor.process(extractMetadata(event)), event);
+    }
+
+    private BotRequestMetadata extractMetadata(MessageReceivedEvent event) {
+        return ImmutableBotRequestMetadata.builder()
+                .author(event.getAuthor().getName())
+                .message(event.getMessage().getContentRaw())
+                .source(DiscordIntegration.SOURCE)
+                .build();
     }
 
     private String formatResponse(String response, MessageReceivedEvent event) {

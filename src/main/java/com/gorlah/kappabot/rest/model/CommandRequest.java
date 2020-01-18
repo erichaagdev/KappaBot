@@ -8,4 +8,5 @@ public class CommandRequest implements BotRequestMetadata {
 
     private String author;
     private String message;
+    private String source;
 }

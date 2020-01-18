@@ -3,7 +3,6 @@ package com.gorlah.kappabot.command;
 import com.gorlah.kappabot.function.BotRequestMetadata;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -18,16 +17,13 @@ public class CommandPayloadBuilder {
 
     private final Pattern REGEX = Pattern.compile("\"[^\"\\\\]*(?:\\\\.[^\"\\\\]*)*\"|\\S+");
 
-    @Value("${discord.command.prefix}")
-    private String commandPrefix;
-
-    public CommandPayload parseMessageAndBuild(BotRequestMetadata metadata) {
-        return new CommandPayload(parseMessage(metadata.getMessage()), metadata);
+    public CommandPayload parseMessageAndBuild(BotRequestMetadata metadata, String commandPrefix) {
+        return new CommandPayload(parseMessage(metadata.getMessage(), commandPrefix), metadata);
     }
 
-    private List<String> parseMessage(String message) {
+    private List<String> parseMessage(String message, String commandPrefix) {
         ArrayList<String> messageList = new ArrayList<>();
-        Matcher regexMatcher = REGEX.matcher(stripCommandPrefix(message));
+        Matcher regexMatcher = REGEX.matcher(stripCommandPrefix(message, commandPrefix));
 
         while (regexMatcher.find()) {
             messageList.add(sanitizeMessageToAdd(regexMatcher.group()));
@@ -36,7 +32,7 @@ public class CommandPayloadBuilder {
         return messageList;
     }
 
-    private String stripCommandPrefix(String message) {
+    private String stripCommandPrefix(String message, String commandPrefix) {
         if (message.length() == commandPrefix.length()) {
             return "";
         }

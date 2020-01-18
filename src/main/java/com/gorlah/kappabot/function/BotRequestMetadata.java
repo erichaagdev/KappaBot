@@ -4,4 +4,5 @@ public interface BotRequestMetadata {
 
     String getAuthor();
     String getMessage();
+    String getSource();
 }
