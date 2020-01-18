@@ -32,7 +32,7 @@ repositories {
 group = "com.gorlah"
 version = "0.0.1-SNAPSHOT"
 
-description = "KappaBot: a Discord chat bot"
+description = "KappaBot: a flexible Java chat bot"
 
 java {
     sourceCompatibility = JavaVersion.VERSION_11
