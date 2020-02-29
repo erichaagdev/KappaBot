@@ -43,10 +43,10 @@ public interface Command {
     void addChild(Command child);
 
     /**
-     * The method to call for processing this command.
+     * Processes a command.
      *
      * @param payload a payload containing information which may be useful or required for processing this command
-     * @return the text to display generated from this command
+     * @return the markdown formatted response from executing this command
      */
     String process(CommandPayload payload);
 }

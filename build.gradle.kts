@@ -46,6 +46,7 @@ tasks {
 }
 
 dependencies {
+    implementation("jakarta.inject:jakarta.inject-api:1.0")
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
     implementation("org.springframework.boot:spring-boot-starter-web")
     implementation("com.github.ben-manes.caffeine:caffeine:2.8.1")
@@ -55,6 +56,7 @@ dependencies {
     implementation("org.jsoup:jsoup:1.12.1")
     implementation("org.apache.commons:commons-text:1.8")
     implementation("com.google.guava:guava:28.2-jre")
+    implementation("com.atlassian.commonmark:commonmark:0.14.0")
 
     // Database drivers
     implementation("mysql:mysql-connector-java:8.0.19")

@@ -1,5 +1,7 @@
 package com.gorlah.kappabot.function;
 
+import com.gorlah.kappabot.function.response.BotResponse;
+
 import java.util.Optional;
 
 public interface BotFunction {
@@ -10,5 +12,5 @@ public interface BotFunction {
      * @param metadata metadata related to the bot request
      * @return the response based on the message
      */
-    Optional<String> process(BotRequestMetadata metadata);
+    Optional<BotResponse> process(BotRequestMetadata metadata);
 }

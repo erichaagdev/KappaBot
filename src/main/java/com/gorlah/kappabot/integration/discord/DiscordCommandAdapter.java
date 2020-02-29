@@ -21,6 +21,11 @@ public class DiscordCommandAdapter implements CommandAdapter {
     }
 
     @Override
+    public String getContentType() {
+        return "text/markdown";
+    }
+
+    @Override
     public boolean isEnabled() {
         return discordIntegration.isEnabled();
     }

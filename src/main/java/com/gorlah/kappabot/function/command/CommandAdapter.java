@@ -26,6 +26,13 @@ public interface CommandAdapter {
     String getSource();
 
     /**
+     * Gets the output content type that this adapter supports.
+     *
+     * @return the supported output content type
+     */
+    String getContentType();
+
+    /**
      * Returns the enabled status of this command adapter. When the command adapter is enabled, it may be used to
      * handle incoming requests from a certain source with a certain command prefix.
      *
