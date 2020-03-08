@@ -5,6 +5,7 @@ import com.gorlah.kappabot.function.response.BotResponse;
 import java.util.Optional;
 
 
+@FunctionalInterface
 public interface ResponseFormatter {
 
     /**
