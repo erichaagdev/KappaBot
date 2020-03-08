@@ -3,7 +3,7 @@ package com.gorlah.kappabot.function.slashdot;
 import com.gorlah.kappabot.function.BotFunction;
 import com.gorlah.kappabot.function.BotRequestMetadata;
 import com.gorlah.kappabot.function.response.BotResponse;
-import com.gorlah.kappabot.function.response.ImmutableBotResponse;
+import com.gorlah.kappabot.function.response.BotResponses;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -23,7 +23,7 @@ public class MobileSlashdotTitleFunction implements BotFunction {
                     .map(title -> "> " + title)
                     .collect(Collectors.joining("\n"));
             if (!response.trim().isEmpty()) {
-                return Optional.of(ImmutableBotResponse.of("text/markdown", response));
+                return Optional.of(BotResponses.fromMarkdown(response));
             }
         }
         return Optional.empty();

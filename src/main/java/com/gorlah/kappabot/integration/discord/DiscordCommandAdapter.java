@@ -1,6 +1,7 @@
 package com.gorlah.kappabot.integration.discord;
 
 import com.gorlah.kappabot.function.command.CommandAdapter;
+import com.gorlah.kappabot.util.StandardContentTypes;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -22,7 +23,7 @@ public class DiscordCommandAdapter implements CommandAdapter {
 
     @Override
     public String getContentType() {
-        return "text/markdown";
+        return StandardContentTypes.MARKDOWN;
     }
 
     @Override

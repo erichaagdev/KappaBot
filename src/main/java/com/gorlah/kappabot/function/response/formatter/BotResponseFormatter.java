@@ -11,6 +11,8 @@ import org.springframework.stereotype.Component;
 
 import java.util.Optional;
 
+import static com.gorlah.kappabot.util.StandardContentTypes.PLAIN_TEXT;
+
 @Slf4j
 @Component
 @RequiredArgsConstructor
@@ -35,7 +37,7 @@ public class BotResponseFormatter {
                             "Unable to convert to content type {} for adapter {}.",
                             adapter.getContentType(),
                             adapter.getSource());
-                    return responseFormatter.format(response, "text/plain");
+                    return responseFormatter.format(response, PLAIN_TEXT);
                 });
     }
 }

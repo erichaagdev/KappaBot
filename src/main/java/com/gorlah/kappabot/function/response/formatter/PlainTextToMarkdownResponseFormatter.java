@@ -6,14 +6,17 @@ import org.springframework.stereotype.Component;
 import java.util.Optional;
 import java.util.stream.Stream;
 
+import static com.gorlah.kappabot.util.StandardContentTypes.MARKDOWN;
+import static com.gorlah.kappabot.util.StandardContentTypes.PLAIN_TEXT;
+
 @Component
 class PlainTextToMarkdownResponseFormatter implements ResponseFormatter {
 
     @Override
     public Optional<String> format(BotResponse response, String contentType) {
         return Stream.of(response)
-                .filter(resp -> resp.getContentType().equals("text/plain"))
-                .filter(resp -> contentType.equals("text/markdown"))
+                .filter(resp -> PLAIN_TEXT.equals(resp.getContentType()))
+                .filter(resp -> MARKDOWN.equals(contentType))
                 .map(BotResponse::getMessage)
                 .findFirst();
     }

@@ -6,7 +6,7 @@ import com.gorlah.kappabot.command.CommandProcessor;
 import com.gorlah.kappabot.function.BotFunction;
 import com.gorlah.kappabot.function.BotRequestMetadata;
 import com.gorlah.kappabot.function.response.BotResponse;
-import com.gorlah.kappabot.function.response.ImmutableBotResponse;
+import com.gorlah.kappabot.function.response.BotResponses;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -27,6 +27,6 @@ public class CommandFunction implements BotFunction {
                 .map(commandPrefix -> commandPayloadBuilder.parseMessageAndBuild(metadata, commandPrefix))
                 .map(commandProcessor::process)
                 .map(Strings::nullToEmpty)
-                .map(message -> ImmutableBotResponse.of("text/markdown", message));
+                .map(BotResponses::fromMarkdown);
     }
 }

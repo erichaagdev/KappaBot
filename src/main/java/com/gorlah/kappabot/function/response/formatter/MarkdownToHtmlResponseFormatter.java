@@ -8,6 +8,9 @@ import org.springframework.stereotype.Component;
 import java.util.Optional;
 import java.util.stream.Stream;
 
+import static com.gorlah.kappabot.util.StandardContentTypes.HTML;
+import static com.gorlah.kappabot.util.StandardContentTypes.MARKDOWN;
+
 @Component
 class MarkdownToHtmlResponseFormatter implements ResponseFormatter {
 
@@ -17,8 +20,8 @@ class MarkdownToHtmlResponseFormatter implements ResponseFormatter {
     @Override
     public Optional<String> format(BotResponse response, String contentType) {
         return Stream.of(response)
-                .filter(resp -> resp.getContentType().equals("text/markdown"))
-                .filter(resp -> contentType.equals("text/html"))
+                .filter(resp -> MARKDOWN.equals(resp.getContentType()))
+                .filter(resp -> HTML.equals(contentType))
                 .map(BotResponse::getMessage)
                 .map(parser::parse)
                 .map(renderer::render)
