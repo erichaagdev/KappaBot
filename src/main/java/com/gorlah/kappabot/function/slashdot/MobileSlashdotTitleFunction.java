@@ -18,14 +18,15 @@ public class MobileSlashdotTitleFunction implements BotFunction {
 
     @Override
     public Optional<BotResponse> process(BotRequestMetadata metadata) {
-        if (slashdotParser.containsMobileSlashdotUrl(metadata.getMessage())) {
-            var response = slashdotParser.getTitles(metadata.getMessage()).stream()
-                    .map(title -> "> " + title)
-                    .collect(Collectors.joining("\n"));
-            if (!response.trim().isEmpty()) {
-                return Optional.of(BotResponses.fromMarkdown(response));
-            }
-        }
-        return Optional.empty();
+        return Optional.of(metadata)
+                .map(BotRequestMetadata::getMessage)
+                .filter(slashdotParser::containsMobileSlashdotUrl)
+                .map(slashdotParser::getTitles)
+                .map(titles -> titles.stream()
+                        .map(title -> "> " + title)
+                        .collect(Collectors.joining("\n")))
+                .map(String::trim)
+                .filter(response -> !response.isEmpty())
+                .map(BotResponses::fromMarkdown);
     }
 }
