@@ -1,6 +1,7 @@
 package com.gorlah.kappabot.integration.discord;
 
 import com.google.common.base.Strings;
+import com.google.common.collect.ImmutableList;
 import com.gorlah.kappabot.function.BotRequestMetadata;
 import com.gorlah.kappabot.function.FunctionProcessor;
 import com.gorlah.kappabot.integration.ImmutableBotRequestMetadata;
@@ -18,6 +19,7 @@ import org.springframework.stereotype.Component;
 import javax.annotation.PostConstruct;
 import javax.security.auth.login.LoginException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Slf4j
@@ -51,12 +53,15 @@ public class DiscordBot extends ListenerAdapter {
         if (event.getAuthor().isBot()) {
             return;
         }
-
-        event.getChannel().sendMessage(processMessageEvent(event)).queue();
+        processMessageEvent(event).forEach(message -> sendResponse(message, event));
     }
 
-    private String processMessageEvent(MessageReceivedEvent event) {
-        return formatResponse(functionProcessor.process(extractMetadata(event)), event);
+    private void sendResponse(String message, MessageReceivedEvent event) {
+        event.getChannel().sendMessage(message).queue();
+    }
+
+    private List<String> processMessageEvent(MessageReceivedEvent event) {
+        return formatResponses(functionProcessor.process(extractMetadata(event)), event);
     }
 
     private BotRequestMetadata extractMetadata(MessageReceivedEvent event) {
@@ -65,6 +70,12 @@ public class DiscordBot extends ListenerAdapter {
                 .message(event.getMessage().getContentRaw())
                 .source(DiscordIntegration.SOURCE)
                 .build();
+    }
+
+    private List<String> formatResponses(List<String> responses, MessageReceivedEvent event) {
+        return responses.stream()
+                .map(response -> formatResponse(response, event))
+                .collect(ImmutableList.toImmutableList());
     }
 
     private String formatResponse(String response, MessageReceivedEvent event) {

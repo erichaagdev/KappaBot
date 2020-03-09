@@ -11,7 +11,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @Service
 @RestController
@@ -23,7 +25,7 @@ public class CommandService {
     @PostMapping("/command/run")
     public String runCommand(@RequestBody CommandRequest request) {
         validate(request);
-        return formatResponse(functionProcessor.process(request), request.getAuthor());
+        return formatResponses(functionProcessor.process(request), request.getAuthor());
     }
 
     private void validate(CommandRequest request) {
@@ -33,6 +35,12 @@ public class CommandService {
                 || Strings.isNullOrEmpty(request.getSource())) {
             throw new RuntimeException();
         }
+    }
+
+    private String formatResponses(List<String> responses, String author) {
+        return responses.stream()
+                .map(response -> formatResponse(response, author))
+                .collect(Collectors.joining("\n-----------------------\n"));
     }
 
     private String formatResponse(String response, String author) {

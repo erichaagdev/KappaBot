@@ -2,6 +2,8 @@ package com.gorlah.kappabot.function.slashdot;
 
 import com.gorlah.kappabot.function.BotFunction;
 import com.gorlah.kappabot.function.BotRequestMetadata;
+import com.gorlah.kappabot.function.response.BotResponse;
+import com.gorlah.kappabot.function.response.BotResponses;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -15,13 +17,13 @@ public class MobileSlashdotTitleFunction implements BotFunction {
     private final MobileSlashdotTitleParser slashdotParser;
 
     @Override
-    public Optional<String> process(BotRequestMetadata metadata) {
+    public Optional<BotResponse> process(BotRequestMetadata metadata) {
         if (slashdotParser.containsMobileSlashdotUrl(metadata.getMessage())) {
             var response = slashdotParser.getTitles(metadata.getMessage()).stream()
                     .map(title -> "> " + title)
                     .collect(Collectors.joining("\n"));
             if (!response.trim().isEmpty()) {
-                return Optional.of(response);
+                return Optional.of(BotResponses.fromMarkdown(response));
             }
         }
         return Optional.empty();
