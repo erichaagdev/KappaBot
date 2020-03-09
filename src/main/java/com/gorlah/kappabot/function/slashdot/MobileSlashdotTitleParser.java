@@ -13,15 +13,11 @@ import java.util.stream.Collectors;
 @Slf4j
 @Component
 @RequiredArgsConstructor
-public class MobileSlashdotTitleParser {
+class MobileSlashdotTitleParser {
 
     private final Pattern mobileSlashdotArticleUrlPattern = Pattern.compile("https://m\\.slashdot\\.org/story/\\d+");
 
     private final MobileSlashdotTitleFetcher mobileSlashdotTitleFetcher;
-
-    public boolean containsMobileSlashdotUrl(String message) {
-        return mobileSlashdotArticleUrlPattern.matcher(message).find();
-    }
 
     public List<String> getTitles(String message) {
         return mobileSlashdotArticleUrlPattern.matcher(message).results()

@@ -35,7 +35,6 @@ class MobileSlashdotTitleFunctionTest {
         var mobileSlashdotUrl = "https://m.slashdot.org/story/123456";
         var mobileSlashdotTitle = "KappaBot Declared Bot Of The Year";
 
-        when(parser.containsMobileSlashdotUrl(mobileSlashdotUrl)).thenReturn(true);
         when(parser.getTitles(mobileSlashdotUrl)).thenReturn(List.of(mobileSlashdotTitle));
 
         var request = ImmutableBotRequestMetadata.builder()

@@ -20,8 +20,8 @@ public class MobileSlashdotTitleFunction implements BotFunction {
     public Optional<BotResponse> process(BotRequestMetadata metadata) {
         return Optional.of(metadata)
                 .map(BotRequestMetadata::getMessage)
-                .filter(slashdotParser::containsMobileSlashdotUrl)
                 .map(slashdotParser::getTitles)
+                .filter(titles -> !titles.isEmpty())
                 .map(titles -> titles.stream()
                         .map(title -> "> " + title)
                         .collect(Collectors.joining("\n")))
