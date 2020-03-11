@@ -7,6 +7,7 @@ import com.gorlah.kappabot.function.response.BotResponses;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -18,14 +19,19 @@ public class MobileSlashdotTitleFunction implements BotFunction {
 
     @Override
     public Optional<BotResponse> process(BotRequestMetadata metadata) {
-        if (slashdotParser.containsMobileSlashdotUrl(metadata.getMessage())) {
-            var response = slashdotParser.getTitles(metadata.getMessage()).stream()
-                    .map(title -> "> " + title)
-                    .collect(Collectors.joining("\n"));
-            if (!response.trim().isEmpty()) {
-                return Optional.of(BotResponses.fromMarkdown(response));
-            }
-        }
-        return Optional.empty();
+        return Optional.of(metadata)
+                .map(BotRequestMetadata::getMessage)
+                .map(slashdotParser::getTitles)
+                .filter(titles -> !titles.isEmpty())
+                .map(this::toMarkdown)
+                .map(String::trim)
+                .filter(response -> !response.isEmpty())
+                .map(BotResponses::fromMarkdown);
+    }
+
+    private String toMarkdown(List<String> titles) {
+        return titles.stream()
+                .map(title -> "> " + title)
+                .collect(Collectors.joining("\n"));
     }
 }
