@@ -12,6 +12,7 @@ import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.entities.Activity;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
+import net.dv8tion.jda.api.requests.GatewayIntent;
 import org.apache.commons.text.StringSubstitutor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -41,7 +42,7 @@ public class DiscordBot extends ListenerAdapter {
     @PostConstruct
     private void initialize() throws LoginException {
         if (discordIntegration.isEnabled()) {
-            bot = new JDABuilder(discordIntegration.getToken())
+            bot = JDABuilder.create(discordIntegration.getToken(), GatewayIntent.GUILD_MESSAGES)
                     .addEventListeners(this)
                     .setActivity(Activity.playing(Strings.isNullOrEmpty(botStatus) ? commandPrefix + " help" : botStatus))
                     .build();
