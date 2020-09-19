@@ -12,14 +12,14 @@ buildscript {
 plugins {
     java
     idea
-    id("io.franzbecker.gradle-lombok") version "3.1.0"
-    id("org.springframework.boot") version "2.2.3.RELEASE"
-    id("io.spring.dependency-management") version "1.0.8.RELEASE"
+    id("io.freefair.lombok") version "5.2.1"
+    id("org.springframework.boot") version "2.3.4.RELEASE"
+    id("io.spring.dependency-management") version "1.0.10.RELEASE"
 }
 
 dependencyManagement {
     imports {
-        mavenBom("org.springframework.boot:spring-boot-dependencies:2.2.3.RELEASE")
+        mavenBom("org.springframework.boot:spring-boot-dependencies:2.3.4.RELEASE")
     }
 }
 
@@ -35,13 +35,19 @@ version = "0.0.1-SNAPSHOT"
 description = "KappaBot: a flexible Java chat bot"
 
 java {
-    sourceCompatibility = JavaVersion.VERSION_11
-    targetCompatibility = JavaVersion.VERSION_11
+    sourceCompatibility = JavaVersion.VERSION_15
+    targetCompatibility = JavaVersion.VERSION_15
 }
 
 tasks {
+
+    withType<JavaCompile> {
+        options.compilerArgs.add("--enable-preview")
+    }
+    
     test {
         useJUnitPlatform()
+        jvmArgs("--enable-preview")
     }
 }
 
@@ -50,7 +56,7 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
     implementation("org.springframework.boot:spring-boot-starter-web")
     implementation("com.github.ben-manes.caffeine:caffeine:2.8.1")
-    implementation("net.dv8tion:JDA:4.1.0_100") {
+    implementation("net.dv8tion:JDA:4.2.0_168") {
         exclude("club.minnced:opus-java")
     }
     implementation("org.jsoup:jsoup:1.12.1")
@@ -66,8 +72,4 @@ dependencies {
     testImplementation("org.springframework.boot:spring-boot-starter-test") {
         exclude("org.junit.vintage:junit-vintage-engine")
     }
-
-    // Lombok
-    compileOnly("org.projectlombok:lombok:1.18.10")
-    annotationProcessor("org.projectlombok:lombok:1.18.10")
 }
