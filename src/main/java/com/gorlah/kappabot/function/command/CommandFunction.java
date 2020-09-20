@@ -19,10 +19,12 @@ public class CommandFunction implements BotFunction {
     private final CommandPayloadBuilder commandPayloadBuilder;
     private final CommandProcessor commandProcessor;
     private final CommandAdapterFinder commandAdapterFinder;
+    private final DefaultCommandAdapter defaultCommandAdapter;
 
     @Override
     public Optional<BotResponse> process(BotRequestMetadata metadata) {
         return commandAdapterFinder.findAdapter(metadata)
+                .or(() -> Optional.of(defaultCommandAdapter))
                 .map(CommandAdapter::getCommandPrefix)
                 .map(commandPrefix -> commandPayloadBuilder.parseMessageAndBuild(metadata, commandPrefix))
                 .map(commandProcessor::process)

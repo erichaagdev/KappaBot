@@ -15,6 +15,11 @@ plugins {
     id("io.freefair.lombok") version "5.2.1"
     id("org.springframework.boot") version "2.3.4.RELEASE"
     id("io.spring.dependency-management") version "1.0.10.RELEASE"
+    id("com.gorylenko.gradle-git-properties") version "2.2.3"
+}
+
+springBoot {
+    buildInfo()
 }
 
 dependencyManagement {
@@ -54,6 +59,7 @@ tasks {
 dependencies {
     implementation("jakarta.inject:jakarta.inject-api:1.0")
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
+    implementation("org.springframework.boot:spring-boot-starter-validation")
     implementation("org.springframework.boot:spring-boot-starter-web")
     implementation("com.github.ben-manes.caffeine:caffeine:2.8.1")
     implementation("net.dv8tion:JDA:4.2.0_168") {
@@ -64,11 +70,17 @@ dependencies {
     implementation("com.google.guava:guava:28.2-jre")
     implementation("com.atlassian.commonmark:commonmark:0.14.0")
 
+    // SpringDoc & OpenAPI 3.0
+    implementation("org.springdoc:springdoc-openapi-ui:1.4.6")
+
     // Database drivers
     implementation("mysql:mysql-connector-java:8.0.19")
     implementation("com.h2database:h2:1.4.200")
 
     // Test dependencies
+    testImplementation("io.rest-assured:rest-assured:4.2.0")
+    testImplementation("io.rest-assured:rest-assured-all:4.2.0")
+    testImplementation("io.rest-assured:json-path:4.2.0")
     testImplementation("org.springframework.boot:spring-boot-starter-test") {
         exclude("org.junit.vintage:junit-vintage-engine")
     }

@@ -37,7 +37,7 @@ public class CommandPayloadBuilder {
             return "";
         }
 
-        return message.substring(commandPrefix.length() + 1);
+        return message.substring(commandPrefix.length()).stripLeading();
     }
 
     private String sanitizeMessageToAdd(String message) {
