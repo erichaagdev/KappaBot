@@ -36,5 +36,4 @@ class ValidationControllerAdvice {
                 .collect(Collectors.toUnmodifiableList());
         return new ValidationErrorResponse(violations);
     }
-
 }

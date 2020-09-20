@@ -1,23 +1,19 @@
 package com.gorlah.kappabot.function.command;
 
 import com.gorlah.kappabot.util.StandardContentTypes;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 @Component
 public class DefaultCommandAdapter implements CommandAdapter {
 
-    @Value("${kb.default.command.prefix:}")
-    private String defaultCommandPrefix;
-
     @Override
     public String getCommandPrefix() {
-        return defaultCommandPrefix;
+        return "/kb";
     }
 
     @Override
     public String getSource() {
-        return "";
+        return "default";
     }
 
     @Override

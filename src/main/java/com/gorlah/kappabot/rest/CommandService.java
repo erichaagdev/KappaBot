@@ -23,8 +23,8 @@ public class CommandService {
 
     private final FunctionProcessor functionProcessor;
 
-    @PostMapping(value = "/command/run", produces = MediaType.TEXT_PLAIN_VALUE)
-    @ApiResponse(responseCode = "200", content = @Content(schema = @Schema(example = "Hey, Gorlah!")))
+    @PostMapping(value = "/command/run")
+    @ApiResponse(responseCode = "200", content = {@Content(mediaType = MediaType.ALL_VALUE, schema = @Schema(example = "Hey, Gorlah!"))})
     public String runCommand(@RequestBody @Valid CommandRequest request) {
         return functionProcessor.process(request)
                 .stream()

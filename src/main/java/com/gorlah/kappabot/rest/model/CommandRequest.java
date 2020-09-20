@@ -1,7 +1,6 @@
 package com.gorlah.kappabot.rest.model;
 
 import com.gorlah.kappabot.function.BotRequestMetadata;
-import com.gorlah.kappabot.integration.discord.DiscordIntegration;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -12,12 +11,6 @@ import javax.validation.constraints.NotEmpty;
 @Value
 @Builder
 @AllArgsConstructor
-@Schema(example = """
-        {
-          "author": "Gorlah",
-          "message": "hello"
-        }
-        """)
 public class CommandRequest implements BotRequestMetadata {
 
     @NotEmpty
@@ -25,9 +18,10 @@ public class CommandRequest implements BotRequestMetadata {
     String author;
 
     @NotEmpty
-    @Schema(example = "hello")
+    @Schema(example = "/kb hello")
     String message;
 
-    @Schema(example = DiscordIntegration.SOURCE)
+    @NotEmpty
+    @Schema(example = "default")
     String source;
 }
