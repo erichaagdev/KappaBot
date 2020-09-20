@@ -17,7 +17,17 @@ class ImageAddTest {
     @Autowired private ImageRepository imageRepository;
 
     @Test
-    void processWhenFuzzyImageExists() {
+    void processImageAdd() {
+        var request = CommandRequest.builder()
+                .author("Gorlah")
+                .message("image add nod https://i.imgur.com/6ADLV4r.gif")
+                .build();
+
+        CommandServiceClient.callRunCommand(request, "Added image 'nod' to image set.");
+    }
+
+    @Test
+    void processImageAddWhenFuzzyImageExists() {
         var image = Image.builder()
                 .alias("nod2")
                 .url("http://awesomenator.com/content/2012/12/jack-gif.gif")
