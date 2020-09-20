@@ -2,10 +2,12 @@ package com.gorlah.kappabot.rest;
 
 import com.gorlah.kappabot.function.FunctionProcessor;
 import com.gorlah.kappabot.rest.model.CommandRequest;
-import com.gorlah.kappabot.rest.model.CommandResponse;
-import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.text.StringSubstitutor;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -21,14 +23,13 @@ public class CommandService {
 
     private final FunctionProcessor functionProcessor;
 
-    @PostMapping("/command/run")
-    @Operation()
-    public CommandResponse runCommand(@RequestBody @Valid CommandRequest request) {
-        var commandResponse = functionProcessor.process(request)
+    @PostMapping(value = "/command/run", produces = MediaType.TEXT_PLAIN_VALUE)
+    @ApiResponse(responseCode = "200", content = @Content(schema = @Schema(example = "Hey, Gorlah!")))
+    public String runCommand(@RequestBody @Valid CommandRequest request) {
+        return functionProcessor.process(request)
                 .stream()
                 .map(response -> formatResponse(response, request.getAuthor()))
                 .collect(Collectors.joining("\n-----------------------\n"));
-        return new CommandResponse(commandResponse);
     }
 
     private String formatResponse(String response, String author) {

@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class DefaultCommandAdapter implements CommandAdapter {
 
-    @Value("${kappabot.default.command.prefix:}")
+    @Value("${kb.default.command.prefix:}")
     private String defaultCommandPrefix;
 
     @Override

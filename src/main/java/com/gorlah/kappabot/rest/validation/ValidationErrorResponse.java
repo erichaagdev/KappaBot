@@ -6,12 +6,12 @@ import lombok.Value;
 import java.util.List;
 
 @Value
-class ValidationErrorResponse {
+public class ValidationErrorResponse {
 
     List<ValidationError> errors;
 
     @Value
-    static class ValidationError {
+    public static class ValidationError {
 
         @Schema(example = "author")
         String field;
