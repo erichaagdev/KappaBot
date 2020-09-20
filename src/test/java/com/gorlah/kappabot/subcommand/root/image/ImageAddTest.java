@@ -3,8 +3,7 @@ package com.gorlah.kappabot.subcommand.root.image;
 import com.gorlah.kappabot.annotation.KappaBotIntegrationTest;
 import com.gorlah.kappabot.jpa.entity.Image;
 import com.gorlah.kappabot.jpa.repository.ImageRepository;
-import com.gorlah.kappabot.rest.CommandServiceClient;
-import com.gorlah.kappabot.rest.model.CommandRequest;
+import com.gorlah.kappabot.rest.CommandServiceTestClient;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.annotation.DirtiesContext;
@@ -18,12 +17,9 @@ class ImageAddTest {
 
     @Test
     void processImageAdd() {
-        var request = CommandRequest.builder()
-                .author("Gorlah")
-                .message("image add nod https://i.imgur.com/6ADLV4r.gif")
-                .build();
-
-        CommandServiceClient.callRunCommand(request, "Added image 'nod' to image set.");
+        CommandServiceTestClient.callRunCommand(
+                "/kb image add nod https://i.imgur.com/6ADLV4r.gif",
+                "Added image 'nod' to image set.");
     }
 
     @Test
@@ -35,11 +31,8 @@ class ImageAddTest {
                 .build();
         imageRepository.save(image);
 
-        var request = CommandRequest.builder()
-                .author("Gorlah")
-                .message("image add nod https://i.imgur.com/6ADLV4r.gif")
-                .build();
-
-        CommandServiceClient.callRunCommand(request, "Added image 'nod' to image set.");
+        CommandServiceTestClient.callRunCommand(
+                "/kb image add nod https://i.imgur.com/6ADLV4r.gif",
+                "Added image 'nod' to image set.");
     }
 }

@@ -5,9 +5,11 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Value;
+import lombok.With;
 
 import javax.validation.constraints.NotEmpty;
 
+@With
 @Value
 @Builder
 @AllArgsConstructor
@@ -21,7 +23,6 @@ public class CommandRequest implements BotRequestMetadata {
     @Schema(example = "/kb hello")
     String message;
 
-    @NotEmpty
     @Schema(example = "default")
     String source;
 }

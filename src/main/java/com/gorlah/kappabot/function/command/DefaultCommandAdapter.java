@@ -6,14 +6,17 @@ import org.springframework.stereotype.Component;
 @Component
 public class DefaultCommandAdapter implements CommandAdapter {
 
+    public static final String DEFAULT_COMMAND_PREFIX = "/kb";
+    public static final String DEFAULT_SOURCE = "default";
+
     @Override
     public String getCommandPrefix() {
-        return "/kb";
+        return DEFAULT_COMMAND_PREFIX;
     }
 
     @Override
     public String getSource() {
-        return "default";
+        return DEFAULT_SOURCE;
     }
 
     @Override

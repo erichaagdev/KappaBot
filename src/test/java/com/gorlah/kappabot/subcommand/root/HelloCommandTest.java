@@ -1,8 +1,7 @@
 package com.gorlah.kappabot.subcommand.root;
 
 import com.gorlah.kappabot.annotation.KappaBotIntegrationTest;
-import com.gorlah.kappabot.rest.CommandServiceClient;
-import com.gorlah.kappabot.rest.model.CommandRequest;
+import com.gorlah.kappabot.rest.CommandServiceTestClient;
 import org.junit.jupiter.api.Test;
 
 @KappaBotIntegrationTest
@@ -10,21 +9,15 @@ class HelloCommandTest {
 
     @Test
     void processHello() {
-        var request = CommandRequest.builder()
-                .author("Gorlah")
-                .message("hello")
-                .build();
-
-        CommandServiceClient.callRunCommand(request, "Hey, Gorlah!");
+        CommandServiceTestClient.callRunCommand(
+                "/kb hello",
+                "Hey, Gorlah!");
     }
 
     @Test
     void processHelloThere() {
-        var request = CommandRequest.builder()
-                .author("Gorlah")
-                .message("hello there")
-                .build();
-
-        CommandServiceClient.callRunCommand(request, "General Gorlah!");
+        CommandServiceTestClient.callRunCommand(
+                "/kb hello there",
+                "General Gorlah!");
     }
 }
