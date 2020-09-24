@@ -1,8 +1,7 @@
 package com.gorlah.kappabot.subcommand.root.meme.util;
 
-import com.gorlah.kappabot.jpa.entity.Meme;
+import com.gorlah.kappabot.jpa.entity.SavedMeme;
 import com.gorlah.kappabot.jpa.repository.MemeRepository;
-import com.gorlah.kappabot.meme.MemeTemplate;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -10,13 +9,13 @@ import java.util.List;
 
 @Component
 @RequiredArgsConstructor
-class MemeSaver {
+public class MemeSaver {
 
     private final MemeRepository memeRepository;
 
-    Meme save(MemeTemplate memeTemplate, String url, String createdBy, List<String> parameters) {
-        Meme meme = Meme.builder()
-                .memeName(memeTemplate.getName())
+    public SavedMeme save(String memeName, String url, String createdBy, List<String> parameters) {
+        SavedMeme meme = SavedMeme.builder()
+                .memeName(memeName)
                 .parameters(String.join(" ", parameters))
                 .url(url)
                 .user(createdBy)

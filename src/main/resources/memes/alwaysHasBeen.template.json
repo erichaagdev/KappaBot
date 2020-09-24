@@ -1,0 +1,40 @@
+{
+  "name": "alwaysHasBeen",
+  "baseImage": "/memes/alwaysHasBeen.png",
+  "description": "Wait, It's All Ohio? Always Has Been.",
+  "components": [
+    {
+      "type": "TEXT",
+      "x": 575,
+      "y": 100,
+      "width": 500,
+      "height": 225,
+      "style": 0,
+      "size": 36,
+      "optional": false,
+      "font": "Arial",
+      "color": "#FFFFFF"
+    },
+    {
+      "type": "TEXT",
+      "default": "Always has been",
+      "x": 1000,
+      "y": 5,
+      "width": 490,
+      "height": 60,
+      "style": 0,
+      "size": 36,
+      "optional": true,
+      "font": "Arial",
+      "color": "#FFFFFF"
+    },
+    {
+      "type": "IMAGE",
+      "x": 50,
+      "y": 100,
+      "width": 500,
+      "height": 600,
+      "optional": false
+    }
+  ]
+}

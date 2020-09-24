@@ -3,7 +3,7 @@ package com.gorlah.kappabot.integration.imgur;
 import lombok.Value;
 
 import javax.imageio.ImageIO;
-import java.awt.image.BufferedImage;
+import java.awt.image.RenderedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.Base64;
@@ -11,10 +11,10 @@ import java.util.Base64;
 @Value
 public class ImgurImage {
 
-    private String image;
-    private String type = "base64";
+    String image;
+    String type = "base64";
 
-    public ImgurImage(BufferedImage image) {
+    public ImgurImage(RenderedImage image) {
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
 
         try {

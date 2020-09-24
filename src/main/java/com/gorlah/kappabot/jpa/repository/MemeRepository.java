@@ -1,9 +1,11 @@
 package com.gorlah.kappabot.jpa.repository;
 
-import com.gorlah.kappabot.jpa.entity.Meme;
+import com.gorlah.kappabot.jpa.entity.SavedMeme;
 import org.springframework.data.repository.CrudRepository;
 
-public interface MemeRepository extends CrudRepository<Meme, Integer> {
+import java.util.Optional;
 
-    Meme findByMemeNameAndParameters(String memeName, String parameters);
+public interface MemeRepository extends CrudRepository<SavedMeme, Integer> {
+
+    Optional<SavedMeme> findByMemeNameAndParameters(String memeName, String parameters);
 }

@@ -1,0 +1,27 @@
+{
+  "name": "butterfly",
+  "baseImage": "/memes/butterfly.png",
+  "description": "A humanoid character erroneously identifying a butterfly as a pigeon.",
+  "components": [
+    {
+      "type": "TEXT",
+      "x": 10,
+      "y": 675,
+      "width": 1098,
+      "height": 150,
+      "style": 2,
+      "size": 48,
+      "optional": false,
+      "font": "Arial",
+      "color": "#FFFFFF"
+    },
+    {
+      "type": "IMAGE",
+      "x": 650,
+      "y": 75,
+      "width": 450,
+      "height": 400,
+      "optional": true
+    }
+  ]
+}

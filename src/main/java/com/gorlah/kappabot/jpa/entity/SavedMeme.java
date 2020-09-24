@@ -14,12 +14,12 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import java.sql.Timestamp;
 
-@Entity
+@Entity(name = "Meme")
 @Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class Meme {
+public class SavedMeme {
 
     @Id
     @GeneratedValue(strategy = GenerationType.TABLE)

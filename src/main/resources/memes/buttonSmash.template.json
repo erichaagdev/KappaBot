@@ -1,0 +1,19 @@
+{
+  "name": "buttonSmash",
+  "baseImage": "/memes/buttonSmash.png",
+  "description": "An image of a hand about to hit a blue button.",
+  "components": [
+    {
+      "type": "TEXT",
+      "x": 100,
+      "y": 425,
+      "width": 440,
+      "height": 275,
+      "style": 2,
+      "size": 72,
+      "optional": false,
+      "font": "Arial",
+      "color": "#FFFFFF"
+    }
+  ]
+}
