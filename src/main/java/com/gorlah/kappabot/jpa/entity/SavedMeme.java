@@ -42,7 +42,8 @@ public class SavedMeme {
 
     private int useCount;
 
-    public void incrementUseCount() {
+    public SavedMeme incrementUseCount() {
         useCount++;
+        return this;
     }
 }
