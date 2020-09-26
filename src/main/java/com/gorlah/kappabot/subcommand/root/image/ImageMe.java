@@ -32,7 +32,7 @@ public class ImageMe extends ImageSubcommand {
             return "I need the name of an image to display.";
         }
 
-        Image image = imageHelper.getImage(parameters);
+        Image image = imageHelper.getImageFuzzy(parameters);
 
         if (image == null) {
             return "I couldn't find that image.";

@@ -29,6 +29,14 @@ class ImageHelper {
     }
 
     Image getImage(String alias) {
+        return imageRepository.findByAlias(alias);
+    }
+
+    Image getImageFuzzy(List<String> parameters) {
+        return getImageFuzzy(stripQuery(parameters));
+    }
+
+    Image getImageFuzzy(String alias) {
         Image image = imageRepository.findByAlias(alias);
 
         if (image == null) {
