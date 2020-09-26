@@ -2,14 +2,14 @@ package com.gorlah.kappabot.rest;
 
 import com.gorlah.kappabot.rest.model.CommandRequest;
 import io.restassured.http.ContentType;
+import org.hamcrest.Matcher;
 import org.springframework.http.HttpStatus;
 
 import static io.restassured.RestAssured.given;
-import static org.hamcrest.Matchers.equalTo;
 
 public class CommandServiceTestClient {
 
-    public static void callRunCommand(String command, String expectedResponse) {
+    public static void callRunCommand(String command, Matcher<String> matches) {
         var request = CommandRequest.builder()
                 .author("Gorlah")
                 .message(command)
@@ -23,6 +23,6 @@ public class CommandServiceTestClient {
                 .prettyPeek()
         .then()
                 .statusCode(HttpStatus.OK.value())
-                .body(equalTo(expectedResponse));
+                .body(matches);
     }
 }

@@ -17,16 +17,7 @@ public class CommandAdapterFinder {
         return commandAdapters.stream()
                 .filter(CommandAdapter::isEnabled)
                 .filter(adapter -> adapter.getSource().equals(metadata.getSource()))
-                .filter(adapter -> shouldProcess(metadata, adapter.getCommandPrefix()))
+                .filter(adapter -> metadata.getMessage().startsWith(adapter.getCommandPrefix()))
                 .findFirst();
-    }
-
-    private boolean shouldProcess(BotRequestMetadata metadata, String commandPrefix) {
-        return metadata.getMessage().length() > commandPrefix.length()
-                && messageBeginsWithCommandPrefix(metadata.getMessage(), commandPrefix);
-    }
-
-    private boolean messageBeginsWithCommandPrefix(String message, String commandPrefix) {
-        return commandPrefix.equalsIgnoreCase(message.substring(0, commandPrefix.length()));
     }
 }

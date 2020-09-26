@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.annotation.DirtiesContext.ClassMode;
 
+import static org.hamcrest.Matchers.equalTo;
+
 @KappaBotIntegrationTest
 @DirtiesContext(classMode = ClassMode.BEFORE_EACH_TEST_METHOD)
 class ImageAddTest {
@@ -19,7 +21,7 @@ class ImageAddTest {
     void processImageAdd() {
         CommandServiceTestClient.callRunCommand(
                 "/kb image add nod https://i.imgur.com/6ADLV4r.gif",
-                "Added image 'nod' to image set.");
+                equalTo("Added image 'nod' to image set."));
     }
 
     @Test
@@ -33,6 +35,6 @@ class ImageAddTest {
 
         CommandServiceTestClient.callRunCommand(
                 "/kb image add nod https://i.imgur.com/6ADLV4r.gif",
-                "Added image 'nod' to image set.");
+                equalTo("Added image 'nod' to image set."));
     }
 }
