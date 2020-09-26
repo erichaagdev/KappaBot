@@ -11,6 +11,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Objects;
 import java.util.TreeMap;
+import java.util.stream.Collectors;
 
 public abstract class AbstractCommand implements Command {
 
@@ -59,23 +60,8 @@ public abstract class AbstractCommand implements Command {
 
     @Override
     public String getIncorrectUsageText() {
-        StringBuilder builder = new StringBuilder("Try adding one of the following subcommands to `")
-                .append(getAbsoluteCommandString())
-                .append("`:");
-
-        children.values().stream()
-                .filter(Command::isShownInHelp)
-                .forEach(subcommand -> builder.append(" ").append(subcommand.getName()).append(" ,"));
-
-        if (children.size() > 0) {
-            builder.deleteCharAt(builder.length() - 1);
-        }
-
-        builder.append("\nOr use `")
-                .append(getAbsoluteCommandString())
-                .append(" help`");
-
-        return builder.toString();
+        return "Try adding one of the following subcommands to `" + getAbsoluteCommandString() + "`: " +
+                getChildrenCsv() + "\nOr use `" + getAbsoluteCommandString() + " help`";
     }
 
     @Override
@@ -126,5 +112,13 @@ public abstract class AbstractCommand implements Command {
     @Override
     public String process(CommandPayload payload) {
         return getIncorrectUsageText();
+    }
+
+    private String getChildrenCsv() {
+        return children.values()
+                .stream()
+                .filter(Command::isShownInHelp)
+                .map(Command::getName)
+                .collect(Collectors.joining(", "));
     }
 }

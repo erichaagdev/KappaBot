@@ -4,6 +4,8 @@ import com.gorlah.kappabot.annotation.KappaBotIntegrationTest;
 import com.gorlah.kappabot.rest.CommandServiceTestClient;
 import org.junit.jupiter.api.Test;
 
+import static org.hamcrest.Matchers.equalTo;
+
 @KappaBotIntegrationTest
 class HelloCommandTest {
 
@@ -11,13 +13,13 @@ class HelloCommandTest {
     void processHello() {
         CommandServiceTestClient.callRunCommand(
                 "/kb hello",
-                "Hey, Gorlah!");
+                equalTo("Hey, Gorlah!"));
     }
 
     @Test
     void processHelloThere() {
         CommandServiceTestClient.callRunCommand(
                 "/kb hello there",
-                "General Gorlah!");
+                equalTo("General Gorlah!"));
     }
 }
