@@ -25,7 +25,7 @@ import java.util.Objects;
 public class OpenWeatherFetcher {
 
     private static final String API_BASE = "https://api.openweathermap.org/data/2.5/weather";
-    private static final String API_KEY_PARAM = "APPID";
+    private static final String API_KEY_PARAM = "appid";
     private static final String ZIP_CODE_PARAM = "zip";
     private static final String CITY_PARAM = "q";
     private static final String UNITS_PARAM = "units";
@@ -37,6 +37,7 @@ public class OpenWeatherFetcher {
     private final RestTemplate restTemplate;
     private final OpenWeatherMessageFormatter openWeatherMessageFormatter;
     private final OpenWeatherIntegration openWeatherIntegration;
+    private final OpenWeatherCityOverride openWeatherCityOverride;
 
     private final LoadingCache<String, OpenWeatherResponse> weatherCache =
             Caffeine.newBuilder()
@@ -55,10 +56,18 @@ public class OpenWeatherFetcher {
     }
 
     private OpenWeatherResponse doFetchWeather(String zipCodeOrCityName) {
-        if (zipCodeOrCityName.length() == 5 && Longs.tryParse(zipCodeOrCityName) != null) {
-            return fetchByZipCode(zipCodeOrCityName);
-        }
-        return fetchByCity(zipCodeOrCityName);
+        return openWeatherCityOverride.getOverrideFor(zipCodeOrCityName)
+                .map(override -> {
+                    var response = doFetchWeather(override);
+                    response.setCity(zipCodeOrCityName);
+                    return response;
+                })
+                .orElseGet(() -> {
+                    if (zipCodeOrCityName.length() == 5 && Longs.tryParse(zipCodeOrCityName) != null) {
+                        return fetchByZipCode(zipCodeOrCityName);
+                    }
+                    return fetchByCity(zipCodeOrCityName);
+                });
     }
 
     private OpenWeatherResponse fetchByZipCode(String zipCode) {
@@ -82,7 +91,7 @@ public class OpenWeatherFetcher {
                 .toUri();
     }
 
-    private HttpEntity createRequestEntity() {
+    private HttpEntity<?> createRequestEntity() {
         var headers = new HttpHeaders();
         headers.set(HttpHeaders.USER_AGENT, userAgent);
         headers.set(HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON_VALUE);
