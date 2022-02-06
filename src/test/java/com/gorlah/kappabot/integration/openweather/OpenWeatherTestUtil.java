@@ -8,6 +8,8 @@ import com.gorlah.kappabot.integration.openweather.model.WeatherDetails;
 
 class OpenWeatherTestUtil {
 
+    static final String EXAMPLE_OUTPUT_A = "Current weather for Nowhere Ville: 22°f cloudy & chance of meatballs (▲33°f ▼11°f)";
+
     private OpenWeatherTestUtil() {}
 
     static OpenWeatherResponse getExampleResponseA() {

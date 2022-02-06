@@ -14,6 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
 
 import java.net.URI;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.mock;
@@ -30,27 +31,46 @@ class OpenWeatherFetcherTest {
     private OpenWeatherMessageFormatter openWeatherMessageFormatter;
     @Mock
     private OpenWeatherIntegration openWeatherIntegration;
+    @Mock
+    private OpenWeatherCityOverride openWeatherCityOverride;
 
     private OpenWeatherFetcher openWeatherFetcher;
 
     @BeforeEach
     void setUp() {
-        openWeatherFetcher = new OpenWeatherFetcher(restTemplate, openWeatherMessageFormatter, openWeatherIntegration);
+        openWeatherFetcher = new OpenWeatherFetcher(restTemplate, openWeatherMessageFormatter, openWeatherIntegration, openWeatherCityOverride);
+        when(openWeatherIntegration.getApiKey()).thenReturn("5555555555");
+    }
+
+    private void setupTestResponse(OpenWeatherResponse response) {
+        var responseEntity = (ResponseEntity<OpenWeatherResponse>) mock(ResponseEntity.class);
+        when(responseEntity.getBody()).thenReturn(response);
+        var uri = URI.create("https://api.openweathermap.org/data/2.5/weather?zip=12345&appid=5555555555&units=imperial");
+        var headers = new HttpHeaders();
+        headers.set(HttpHeaders.USER_AGENT, null);
+        headers.set(HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON_VALUE);
+        when(restTemplate.exchange(uri, HttpMethod.GET, new HttpEntity<>(headers), OpenWeatherResponse.class)).thenReturn(responseEntity);
     }
 
     @Test
     void testFetchWeather() {
-        when(openWeatherIntegration.getApiKey()).thenReturn("5555555555");
-        var expected = "Current weather for Nowhere Ville: 22°f cloudy & chance of meatballs (▲33°f ▼11°f)";
-        var responseEntity = (ResponseEntity<OpenWeatherResponse>) mock(ResponseEntity.class);
-        when(responseEntity.getBody()).thenReturn(OpenWeatherTestUtil.getExampleResponseA());
-        var uri = URI.create("https://api.openweathermap.org/data/2.5/weather?zip=12345&APPID=5555555555&units=imperial");
-        var headers = new HttpHeaders();
-        headers.set(HttpHeaders.USER_AGENT, null);
-        headers.set(HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON_VALUE);
-        when(restTemplate.exchange(uri, HttpMethod.GET, new HttpEntity<>(headers), OpenWeatherResponse.class))
-                .thenReturn(responseEntity);
-        when(openWeatherMessageFormatter.format(OpenWeatherTestUtil.getExampleResponseA())).thenReturn(expected);
+        var expected = OpenWeatherTestUtil.EXAMPLE_OUTPUT_A;
+        var response = OpenWeatherTestUtil.getExampleResponseA();
+        setupTestResponse(response);
+        when(openWeatherMessageFormatter.format(response)).thenReturn(expected);
         assertEquals(expected, openWeatherFetcher.fetchWeather("12345"));
+    }
+
+    @Test
+    void testFetchWithOverride() {
+        var overrideCityName = "Far Far Away";
+        var originalCityName = OpenWeatherTestUtil.getExampleResponseA().getCity();
+        var expected = OpenWeatherTestUtil.EXAMPLE_OUTPUT_A.replaceFirst(originalCityName, overrideCityName);
+        when(openWeatherCityOverride.getOverrideFor(overrideCityName)).thenReturn(Optional.of("12345"));
+        var response = OpenWeatherTestUtil.getExampleResponseA();
+        response.setCity(overrideCityName);
+        setupTestResponse(response);
+        when(openWeatherMessageFormatter.format(response)).thenReturn(expected);
+        assertEquals(expected, openWeatherFetcher.fetchWeather(overrideCityName));
     }
 }
